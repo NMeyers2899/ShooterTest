@@ -26,7 +26,7 @@ namespace MathLibrary
         /// </summary>
         public Vector2 Normalized
         {
-            get 
+            get
             {
                 Vector2 value = this;
                 return value.Normalize();
@@ -43,6 +43,28 @@ namespace MathLibrary
                 return new Vector2();
 
             return this / Magnitude;
+        }
+
+        /// <summary>
+        /// Finds the dot product between two vectors.
+        /// </summary>
+        /// <param name="lhs"> The left hand vector. </param>
+        /// <param name="rhs"> The right hand vector. </param>
+        /// <returns> The dot product of the first vector on to the second. </returns>
+        public static float DotProduct(Vector2 lhs, Vector2 rhs)
+        {
+            return (lhs.X * rhs.X) + (lhs.Y * rhs.Y);
+        }
+
+        /// <summary>
+        /// Finds the distance from the first vector to the second.
+        /// </summary>
+        /// <param name="lhs"> The starting point. </param>
+        /// <param name="rhs"> The ending point. </param>
+        /// <returns> A scalar representing the distance. </returns>
+        public static float Distance(Vector2 lhs, Vector2 rhs)
+        {
+            return (rhs - lhs).Magnitude;
         }
 
         /// <summary>
@@ -119,6 +141,26 @@ namespace MathLibrary
         public static bool operator !=(Vector2 lhs, Vector2 rhs)
         {
             return !(lhs.X == rhs.X && lhs.Y == rhs.Y);
+        }
+
+        public static bool operator >=(Vector2 lhs, Vector2 rhs)
+        {
+            return lhs.X >= rhs.X && lhs.Y >= rhs.Y;
+        }
+
+        public static bool operator <=(Vector2 lhs, Vector2 rhs)
+        {
+            return lhs.X <= rhs.X && lhs.Y <= rhs.Y;
+        }
+
+        public static bool operator <(Vector2 lhs, float rhs)
+        {
+            return lhs.X < rhs && lhs.Y < rhs;
+        }
+
+        public static bool operator >(Vector2 lhs, float rhs)
+        {
+            return lhs.X > rhs && lhs.Y > rhs;
         }
     }
 }

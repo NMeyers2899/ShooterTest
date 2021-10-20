@@ -10,6 +10,7 @@ namespace MathForGames
     {
         private float _speed;
         private Vector2 _velocity;
+        private Vector2 _previousDirection;
 
         public float Speed
         {
@@ -29,9 +30,9 @@ namespace MathForGames
             _speed = speed;
         }
 
-        public override void Update(float deltaTime)
+        public override void Update(float deltaTime, Scene currentScene)
         {
-            base.Update(deltaTime);
+            base.Update(deltaTime, currentScene);
 
             // Get the player input direction.
             int xDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_A)) 
@@ -39,12 +40,22 @@ namespace MathForGames
             int yDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
 
+            if (Convert.ToBoolean(Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)))
+            {
+                Bullet bullet = new Bullet('-', Position.X, Position.Y, 200, _previousDirection.X, 
+                    _previousDirection.Y, Color.WHITE);
+                currentScene.AddActor(bullet);
+            }
+
             // Create a vector that stores the move input.
             Vector2 moveDirection = new Vector2(xDirection, yDirection);
 
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
             Position += Velocity;
+
+            if(xDirection != 0 && yDirection != 0)
+                _previousDirection = new Vector2(xDirection, yDirection);
         }
 
         public override void OnCollision(Actor actor)

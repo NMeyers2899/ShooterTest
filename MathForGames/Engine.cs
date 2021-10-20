@@ -61,11 +61,9 @@ namespace MathForGames
 
             Scene openingScene = new Scene();
             Player player = new Player('@', 10, 10, 150, Color.RED, "Player");
-            Actor actor = new Actor('E', 5, 5, Color.BLUE, "Actor");
 
             AddScene(openingScene);
             openingScene.AddActor(player);
-            openingScene.AddActor(actor);
 
             _scenes[_currentSceneIndex].Start();
         }
@@ -75,8 +73,8 @@ namespace MathForGames
         /// </summary>
         private void Update(float deltaTime)
         {
-            _scenes[_currentSceneIndex].Update(deltaTime);
-            _scenes[_currentSceneIndex].UpdateUI(deltaTime);
+            _scenes[_currentSceneIndex].Update(deltaTime, _scenes[_currentSceneIndex]);
+            _scenes[_currentSceneIndex].UpdateUI(deltaTime, _scenes[_currentSceneIndex]);
 
             // Keeps inputs from piling up, allowing one input per update.
             while (Console.KeyAvailable)
