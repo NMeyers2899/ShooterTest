@@ -42,7 +42,7 @@ namespace MathForGames
 
             if (Convert.ToBoolean(Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)))
             {
-                Bullet bullet = new Bullet('-', Position.X, Position.Y, 200, _previousDirection.X, 
+                Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, _previousDirection.X, 
                     _previousDirection.Y, Color.WHITE);
                 currentScene.AddActor(bullet);
             }
