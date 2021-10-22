@@ -27,7 +27,7 @@ namespace MathForGames
             : base(icon, x, y, color, name)
         {
             _speed = speed;
-            CollisionRadius = 7;
+            CollisionRadius = 10;
         }
 
         public override void Update(float deltaTime, Scene currentScene)
