@@ -64,7 +64,7 @@ namespace MathForGames
             Enemy enemy1 = new Enemy('E', 100, 100, 120, 100, 1, Color.BLACK, player);
             Enemy enemy2 = new Enemy('E', 200, 300, 120, 100, 1, Color.BLACK, player);
             Enemy enemy3 = new Enemy('E', 350, 160, 120, 100, 1, Color.BLACK, player);
-            Enemy enemy4 = new Enemy('E', 10, 10, 120, 100, 1, Color.BLACK, player);
+            Enemy enemy4 = new Enemy('E', 10, 10, 90, 100, 1, Color.BLACK, player);
 
             AddScene(openingScene);
             openingScene.AddActor(player);

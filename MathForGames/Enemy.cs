@@ -40,7 +40,7 @@ namespace MathForGames
             _speed = speed;
             _maxViewAngle = maxViewAngle;
             _maxSightDistance = maxSightDistance;
-            CollisionRadius = 5;
+            CollisionRadius = 7;
         }
 
         public override void Update(float deltaTime, Scene currentScene)

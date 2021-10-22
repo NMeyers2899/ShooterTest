@@ -52,7 +52,7 @@ namespace MathForGames
                 {
                     if(i < _actors.Length)
                     {
-                        if (_actors[i].Name == "Enemy")
+                        if (_actors[i] is Enemy)
                             allEnemiesDead = false;
 
                         // If they have collided...
