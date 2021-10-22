@@ -62,10 +62,14 @@ namespace MathForGames
             Scene openingScene = new Scene();
             Player player = new Player('@', 10, 10, 150, Color.RED);
             Enemy enemy1 = new Enemy('E', 100, 100, 120, 100, 1, Color.BLACK, player);
+            Enemy enemy2 = new Enemy('E', 200, 300, 120, 100, 1, Color.BLACK, player);
+            Enemy enemy3 = new Enemy('E', 350, 160, 120, 100, 1, Color.BLACK, player);
 
             AddScene(openingScene);
             openingScene.AddActor(player);
             openingScene.AddActor(enemy1);
+            openingScene.AddActor(enemy2);
+            openingScene.AddActor(enemy3);
 
             _scenes[_currentSceneIndex].Start();
         }

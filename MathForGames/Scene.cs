@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Raylib_cs;
 
 namespace MathForGames
 {
@@ -33,6 +34,9 @@ namespace MathForGames
         /// </summary>
         public virtual void Update(float deltaTime, Scene currentScene)
         {
+            bool allEnemiesDead = true;
+            bool victoryMessageDisplayed = false;
+
             // Loops through the array to get each character to Update.
             for(int i = 0; i < _actors.Length; i++)
             {
@@ -48,6 +52,9 @@ namespace MathForGames
                 {
                     if(i < _actors.Length)
                     {
+                        if (_actors[i].Name == "Enemy")
+                            allEnemiesDead = false;
+
                         // If they have collided...
                         if (_actors[i].CheckForCollision(_actors[j]) && j != i)
                             // ...calls the OnCollision function for the actor.
@@ -55,6 +62,16 @@ namespace MathForGames
                     }
                 }
             }
+
+            if (allEnemiesDead && !(victoryMessageDisplayed))
+            {
+                UIText victoryMessage = new UIText(200, 200, "Victory Message", Color.BLACK, 100, 100, 12,
+                    "You win!");
+                AddActor(victoryMessage);
+                victoryMessageDisplayed = true;
+            }
+
+            allEnemiesDead = true;
         }
 
         public virtual void UpdateUI(float deltaTime, Scene currentScene)

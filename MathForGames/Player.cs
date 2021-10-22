@@ -68,10 +68,5 @@ namespace MathForGames
 
             Position += Velocity;
         }
-
-        public override void OnCollision(Actor actor, Scene currentScene)
-        {
-            Console.WriteLine("Collision Occured");
-        }
     }
 }
