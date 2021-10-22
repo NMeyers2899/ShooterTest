@@ -67,7 +67,7 @@ namespace MathForGames
 
         public override void OnCollision(Actor actor, Scene currentScene)
         {
-            if(actor.Name == "Player")
+            if(actor is Player)
             {
                 currentScene.TryRemoveActor(actor);
                 UIText deathMessage = new UIText(400, 200, "Death Message", Color.BLACK, 100, 100, 12, "You died.");

@@ -54,7 +54,7 @@ namespace MathForGames
 
         public override void OnCollision(Actor actor, Scene currentScene)
         {
-            if(actor.Name == "Enemy")
+            if(actor is Enemy)
             {
                 currentScene.TryRemoveActor(actor);
                 currentScene.TryRemoveActor(this);
