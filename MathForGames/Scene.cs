@@ -65,7 +65,7 @@ namespace MathForGames
 
             if (allEnemiesDead && !(victoryMessageDisplayed))
             {
-                UIText victoryMessage = new UIText(200, 200, "Victory Message", Color.BLACK, 100, 100, 12,
+                UIText victoryMessage = new UIText(400, 200, "Victory Message", Color.BLACK, 100, 100, 12,
                     "You win!");
                 AddActor(victoryMessage);
                 victoryMessageDisplayed = true;
