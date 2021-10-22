@@ -60,10 +60,12 @@ namespace MathForGames
             Raylib.SetTargetFPS(60);
 
             Scene openingScene = new Scene();
-            Player player = new Player('@', 10, 10, 150, Color.RED, "Player");
+            Player player = new Player('@', 10, 10, 150, Color.RED);
+            Enemy enemy1 = new Enemy('E', 100, 100, 120, 100, 1, Color.BLACK, player);
 
             AddScene(openingScene);
             openingScene.AddActor(player);
+            openingScene.AddActor(enemy1);
 
             _scenes[_currentSceneIndex].Start();
         }

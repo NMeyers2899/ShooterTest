@@ -60,6 +60,8 @@ namespace MathForGames
         public Actor(char icon, float x, float y, Color color, string name = "Actor")
             : this(icon, new Vector2 { X = x, Y = y }, color, name) { }
 
+        public Actor() { }
+
         public virtual void Start()
         {
             _started = true;
@@ -80,7 +82,7 @@ namespace MathForGames
 
         }
 
-        public virtual void OnCollision(Actor actor)
+        public virtual void OnCollision(Actor actor, Scene currentScene)
         {
 
         }

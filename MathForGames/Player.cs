@@ -10,7 +10,6 @@ namespace MathForGames
     {
         private float _speed;
         private Vector2 _velocity;
-        private Vector2 _previousDirection;
 
         public float Speed
         {
@@ -28,6 +27,7 @@ namespace MathForGames
             : base(icon, x, y, color, name)
         {
             _speed = speed;
+            CollisionRadius = 5;
         }
 
         public override void Update(float deltaTime, Scene currentScene)
@@ -40,10 +40,24 @@ namespace MathForGames
             int yDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
 
-            if (Convert.ToBoolean(Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)))
+            if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT)))
             {
-                Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, _previousDirection.X, 
-                    _previousDirection.Y, Color.WHITE);
+                Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, -1, 0, Color.WHITE);
+                currentScene.AddActor(bullet);
+            }
+            else if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_RIGHT)))
+            {
+                Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, 1, 0, Color.WHITE);
+                currentScene.AddActor(bullet);
+            }
+            else if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_UP)))
+            {
+                Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, 0, -1, Color.WHITE);
+                currentScene.AddActor(bullet);
+            }
+            else if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN)))
+            {
+                Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, 0, 1, Color.WHITE);
                 currentScene.AddActor(bullet);
             }
 
@@ -53,12 +67,9 @@ namespace MathForGames
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
             Position += Velocity;
-
-            if(xDirection != 0 && yDirection != 0)
-                _previousDirection = new Vector2(xDirection, yDirection);
         }
 
-        public override void OnCollision(Actor actor)
+        public override void OnCollision(Actor actor, Scene currentScene)
         {
             Console.WriteLine("Collision Occured");
         }

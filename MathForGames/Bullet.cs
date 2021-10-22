@@ -29,6 +29,7 @@ namespace MathForGames
             _speed = speed;
             _velocity.X = velocityX;
             _velocity.Y = velocityY;
+            CollisionRadius = 5;
         }
 
         public override void Start()
@@ -46,6 +47,18 @@ namespace MathForGames
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
             Position += Velocity;
+
+            if (Position.X >= 900 || Position.Y >= 900 || Position.X <= -100 || Position.Y <= -100)
+                currentScene.TryRemoveActor(this);
+        }
+
+        public override void OnCollision(Actor actor, Scene currentScene)
+        {
+            if(actor.Name == "Enemy")
+            {
+                currentScene.TryRemoveActor(actor);
+                currentScene.TryRemoveActor(this);
+            }
         }
     }
 }
