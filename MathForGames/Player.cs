@@ -10,6 +10,7 @@ namespace MathForGames
     {
         private float _speed;
         private Vector2 _velocity;
+        private int _health;
 
         public float Speed
         {
@@ -23,11 +24,15 @@ namespace MathForGames
             set { _velocity = value; }
         }
 
+        public int Health
+        {
+            get { return _health; }
+        }
+
         public Player(char icon, float x, float y, float speed, Color color, string name = "Player") 
             : base(icon, x, y, color, name)
         {
             _speed = speed;
-            CollisionRadius = 10;
         }
 
         public override void Update(float deltaTime, Scene currentScene)
@@ -45,17 +50,17 @@ namespace MathForGames
                 Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, -1, 0, Color.WHITE);
                 currentScene.AddActor(bullet);
             }
-            else if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_RIGHT)))
+            if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_RIGHT)))
             {
                 Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, 1, 0, Color.WHITE);
                 currentScene.AddActor(bullet);
             }
-            else if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_UP)))
+            if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_UP)))
             {
                 Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, 0, -1, Color.WHITE);
                 currentScene.AddActor(bullet);
             }
-            else if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN)))
+            if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN)))
             {
                 Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, 0, 1, Color.WHITE);
                 currentScene.AddActor(bullet);

@@ -60,12 +60,16 @@ namespace MathForGames
             Raylib.SetTargetFPS(60);
 
             Scene openingScene = new Scene();
-            Player player = new Player('@', 700, 300, 150, Color.RED);
-            Enemy enemy1 = new Enemy('E', 100, 100, 120, 100, 1, Color.BLACK, player);
-            Enemy enemy2 = new Enemy('E', 200, 300, 120, 100, 1, Color.BLACK, player);
-            Enemy enemy3 = new Enemy('E', 350, 160, 120, 100, 1, Color.BLACK, player);
-            Enemy enemy4 = new Enemy('E', 10, 10, 90, 100, 1, Color.BLACK, player);
-            Enemy enemy5 = new Enemy('E', 200, 10, 90, 100, 1, Color.BLACK, player);
+            Player player = new Player('@', 700, 300, 150, Color.GREEN);
+            CircleCollider playerCollider = new CircleCollider(10, player);
+            player.Collider = playerCollider;
+            Enemy enemy1 = new Enemy('E', 100, 100, 120, 100, 1, Color.RED, player);
+            CircleCollider enemyColldier = new CircleCollider(10, enemy1);
+            enemy1.Collider = enemyColldier;
+            Enemy enemy2 = new Enemy('E', 200, 300, 120, 100, 1, Color.RED, player);
+            Enemy enemy3 = new Enemy('E', 350, 160, 120, 100, 1, Color.RED, player);
+            Enemy enemy4 = new Enemy('E', 10, 10, 90, 100, 1, Color.RED, player);
+            Enemy enemy5 = new Enemy('E', 200, 10, 90, 100, 1, Color.RED, player);
 
             AddScene(openingScene);
             openingScene.AddActor(player);
@@ -97,7 +101,7 @@ namespace MathForGames
         private void Draw()
         {
             Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.ORANGE);
+            Raylib.ClearBackground(Color.BLACK);
 
             _scenes[_currentSceneIndex].Draw();
             _scenes[_currentSceneIndex].DrawUI();

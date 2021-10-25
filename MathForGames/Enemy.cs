@@ -40,7 +40,6 @@ namespace MathForGames
             _speed = speed;
             _maxViewAngle = maxViewAngle;
             _maxSightDistance = maxSightDistance;
-            CollisionRadius = 10;
         }
 
         public override void Update(float deltaTime, Scene currentScene)
@@ -70,7 +69,7 @@ namespace MathForGames
             if(actor is Player)
             {
                 currentScene.TryRemoveActor(actor);
-                UIText deathMessage = new UIText(400, 200, "Death Message", Color.BLACK, 100, 100, 12, "You died.");
+                UIText deathMessage = new UIText(400, 200, "Death Message", Color.WHITE, 100, 100, 12, "You died.");
                 currentScene.AddActor(deathMessage);
             }
         }

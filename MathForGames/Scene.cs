@@ -12,6 +12,7 @@ namespace MathForGames
         /// </summary>
         private Actor[] _actors;
         private Actor[] _UIElements;
+        private bool _victoryMessageDisplayed = false;
 
         public Scene()
         {
@@ -35,7 +36,6 @@ namespace MathForGames
         public virtual void Update(float deltaTime, Scene currentScene)
         {
             bool allEnemiesDead = true;
-            bool victoryMessageDisplayed = false;
 
             // Loops through the array to get each character to Update.
             for(int i = 0; i < _actors.Length; i++)
@@ -63,12 +63,12 @@ namespace MathForGames
                 }
             }
 
-            if (allEnemiesDead && !victoryMessageDisplayed)
+            if (allEnemiesDead && !_victoryMessageDisplayed)
             {
-                UIText victoryMessage = new UIText(400, 200, "Victory Message", Color.BLACK, 100, 100, 12,
-                    "You win!");
+                UIText victoryMessage = new UIText(400, 200, "Victory Message", Color.WHITE, 100, 100, 12,
+                    "Level Clear!");
                 AddActor(victoryMessage);
-                victoryMessageDisplayed = true;
+                _victoryMessageDisplayed = true;
             }
 
             allEnemiesDead = true;

@@ -29,7 +29,6 @@ namespace MathForGames
             _speed = speed;
             _velocity.X = velocityX;
             _velocity.Y = velocityY;
-            CollisionRadius = 10;
         }
 
         public override void Start()

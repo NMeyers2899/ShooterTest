@@ -18,7 +18,7 @@ namespace MathForGames
         private string _name;
         private Vector2 _position;
         private bool _started;
-        private float _collisionRadius;
+        private Collider _collider;
 
         /// <summary>
         /// True if the start function has been called for this actor.
@@ -44,10 +44,10 @@ namespace MathForGames
             get { return _name; }
         }
 
-        public float CollisionRadius
+        public Collider Collider
         {
-            get { return _collisionRadius; }
-            set { _collisionRadius = value; }
+            get { return _collider; }
+            set { _collider = value; }
         }
 
         public Actor(char icon, Vector2 position, Color color, string name = "Actor")
@@ -94,10 +94,12 @@ namespace MathForGames
         /// <returns> Whether or not the distance between the two is less than the combined radii. </returns>
         public virtual bool CheckForCollision(Actor other)
         {
-            float combinedRadii = other.CollisionRadius + CollisionRadius;
-            float distance = Vector2.Distance(Position, other.Position);
+            // If this actor or the other actor do not have a collider...
+            if (Collider == null || other.Collider == null)
+                // ...return false.
+                return false;
 
-            return distance <= combinedRadii;
+            return Collider.CheckForCollision(other);
         }
     }
 }
