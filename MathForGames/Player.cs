@@ -10,7 +10,7 @@ namespace MathForGames
     {
         private float _speed;
         private Vector2 _velocity;
-        private int _health;
+        private int _health = 2;
 
         public float Speed
         {
@@ -72,6 +72,33 @@ namespace MathForGames
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
             Position += Velocity;
+        }
+
+        public override void Draw()
+        {
+            base.Draw();
+            Collider.Draw();
+        }
+
+        public override void OnCollision(Actor actor, Scene currentScene)
+        {
+            if (actor is Enemy && Health <= 0)
+            {
+                currentScene.TryRemoveActor(this);
+                UIText deathMessage = new UIText(400, 200, "Death Message", Color.WHITE, 100, 100, 12, "You died.");
+                currentScene.AddActor(deathMessage);
+            }
+            else if (actor is Enemy && Health > 0)
+            {
+                _health--;
+                Position = new Vector2(700, 300);
+            }
+
+            if(actor.Name == "Goal")
+            {
+                currentScene.TryRemoveActor(actor);
+                Position = new Vector2(700, 300);
+            }
         }
     }
 }

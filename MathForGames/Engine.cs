@@ -59,25 +59,40 @@ namespace MathForGames
             Raylib.InitWindow(800, 450, "Math For Games");
             Raylib.SetTargetFPS(60);
 
-            Scene openingScene = new Scene();
-            Player player = new Player('@', 700, 300, 150, Color.GREEN);
-            CircleCollider playerCollider = new CircleCollider(10, player);
-            player.Collider = playerCollider;
-            Enemy enemy1 = new Enemy('E', 100, 100, 120, 100, 1, Color.RED, player);
-            CircleCollider enemyColldier = new CircleCollider(10, enemy1);
-            enemy1.Collider = enemyColldier;
-            Enemy enemy2 = new Enemy('E', 200, 300, 120, 100, 1, Color.RED, player);
-            Enemy enemy3 = new Enemy('E', 350, 160, 120, 100, 1, Color.RED, player);
-            Enemy enemy4 = new Enemy('E', 10, 10, 90, 100, 1, Color.RED, player);
-            Enemy enemy5 = new Enemy('E', 200, 10, 90, 100, 1, Color.RED, player);
+            Scene levelOne = new Scene();
+            Scene levelTwo = new Scene();
 
-            AddScene(openingScene);
-            openingScene.AddActor(player);
-            openingScene.AddActor(enemy1);
-            openingScene.AddActor(enemy2);
-            openingScene.AddActor(enemy3);
-            openingScene.AddActor(enemy4);
-            openingScene.AddActor(enemy5);
+            Player player = new Player('@', 700, 300, 150, Color.GREEN);
+            AABBCollider playerBoxCollider = new AABBCollider(48, 48, player);
+            player.Collider = playerBoxCollider;
+
+            Enemy enemy1 = new Enemy('E', 100, 100, 120, 100, 1, Color.RED, player);
+            AABBCollider enemy1BoxCollider = new AABBCollider(50, 50, enemy1);
+            enemy1.Collider = enemy1BoxCollider;
+
+            Enemy enemy2 = new Enemy('E', 200, 300, 120, 100, 1, Color.RED, player);
+            AABBCollider enemy2BoxCollider = new AABBCollider(50, 50, enemy2);
+            enemy2.Collider = enemy2BoxCollider;
+
+            Enemy enemy3 = new Enemy('E', 350, 160, 120, 100, 1, Color.RED, player);
+            AABBCollider enemy3BoxCollider = new AABBCollider(50, 50, enemy3);
+            enemy3.Collider = enemy3BoxCollider;
+
+            Enemy enemy4 = new Enemy('E', 10, 10, 90, 100, 1, Color.RED, player);
+            AABBCollider enemy4BoxCollider = new AABBCollider(50, 50, enemy4);
+            enemy4.Collider = enemy4BoxCollider;
+
+            Enemy enemy5 = new Enemy('E', 200, 10, 90, 100, 1, Color.RED, player);
+            AABBCollider enemy5BoxCollider = new AABBCollider(50, 50, enemy5);
+            enemy5.Collider = enemy5BoxCollider;
+
+            AddScene(levelOne);
+            levelOne.AddActor(player);
+            levelOne.AddActor(enemy1);
+            levelOne.AddActor(enemy2);
+            levelOne.AddActor(enemy3);
+            levelOne.AddActor(enemy4);
+            levelOne.AddActor(enemy5);
 
             _scenes[_currentSceneIndex].Start();
         }
@@ -163,6 +178,11 @@ namespace MathForGames
         public static void CloseApplication()
         {
             _applicationShouldClose = true;
+        }
+
+        public static void MoveToNextLevel()
+        {
+            _currentSceneIndex++;
         }
     }
 }

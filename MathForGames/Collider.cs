@@ -36,12 +36,16 @@ namespace MathForGames
         {
             if (other.Collider.ColliderType == ColliderType.CIRCLE)
                 return CheckCircleCollision((CircleCollider)other.Collider);
+            else if (other.Collider.ColliderType == ColliderType.AABB)
+                return CheckCollisionAABB((AABBCollider)other.Collider);
 
             return false;
         }
 
         public virtual bool CheckCircleCollision(CircleCollider other) { return false; }
 
-        //public virtual bool CheckCollisionAABB(AABBCollider other) { return false; }
+        public virtual bool CheckCollisionAABB(AABBCollider other) { return false; }
+
+        public virtual void Draw() { }
     }
 }

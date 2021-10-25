@@ -29,6 +29,7 @@ namespace MathForGames
             _speed = speed;
             _velocity.X = velocityX;
             _velocity.Y = velocityY;
+            Collider = new CircleCollider(10, this);
         }
 
         public override void Start()
@@ -51,13 +52,10 @@ namespace MathForGames
                 currentScene.TryRemoveActor(this);
         }
 
-        public override void OnCollision(Actor actor, Scene currentScene)
+        public override void Draw()
         {
-            if(actor is Enemy)
-            {
-                currentScene.TryRemoveActor(actor);
-                currentScene.TryRemoveActor(this);
-            }
+            base.Draw();
+            Collider.Draw();
         }
     }
 }

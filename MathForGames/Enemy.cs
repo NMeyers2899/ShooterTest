@@ -14,6 +14,7 @@ namespace MathForGames
         private Vector2 _forward = new Vector2(1, 0);
         private float _maxViewAngle;
         private float _maxSightDistance;
+        private int _health = 5;
 
         public float Speed
         {
@@ -31,6 +32,10 @@ namespace MathForGames
         {
             get { return _forward; }
             set { _forward = value; }
+        }
+        public float Health
+        {
+            get { return _health; }
         }
 
         public Enemy(char icon, float x, float y, float speed, float maxSightDistance, float maxViewAngle,
@@ -55,6 +60,12 @@ namespace MathForGames
                 Position += Velocity;
         }
 
+        public override void Draw()
+        {
+            base.Draw();
+            Collider.Draw();
+        }
+
         public bool GetTargetInSight()
         {
             Vector2 directionOfTarget = (_target.Position - Position).Normalized;
@@ -66,11 +77,10 @@ namespace MathForGames
 
         public override void OnCollision(Actor actor, Scene currentScene)
         {
-            if(actor is Player)
+            if (actor is Bullet)
             {
+                currentScene.TryRemoveActor(this);
                 currentScene.TryRemoveActor(actor);
-                UIText deathMessage = new UIText(400, 200, "Death Message", Color.WHITE, 100, 100, 12, "You died.");
-                currentScene.AddActor(deathMessage);
             }
         }
     }

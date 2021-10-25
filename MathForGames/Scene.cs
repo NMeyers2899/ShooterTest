@@ -52,7 +52,7 @@ namespace MathForGames
                 {
                     if(i < _actors.Length)
                     {
-                        if (_actors[i] is Enemy)
+                        if (_actors[j] is Enemy)
                             allEnemiesDead = false;
 
                         // If they have collided...
@@ -67,7 +67,13 @@ namespace MathForGames
             {
                 UIText victoryMessage = new UIText(400, 200, "Victory Message", Color.WHITE, 100, 100, 12,
                     "Level Clear!");
-                AddActor(victoryMessage);
+                AddUIElement(victoryMessage);
+
+                Actor goal = new Actor('0', 250, 250, Color.GREEN, "Goal");
+                AABBCollider goalCollider = new AABBCollider(50, 50, goal);
+                goal.Collider = goalCollider;
+                AddActor(goal);
+
                 _victoryMessageDisplayed = true;
             }
 
