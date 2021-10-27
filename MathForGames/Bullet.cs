@@ -10,6 +10,7 @@ namespace MathForGames
     {
         private float _speed;
         private Vector2 _velocity;
+        private Vector2 _basePosition;
 
         public float Speed
         {
@@ -23,13 +24,14 @@ namespace MathForGames
             set { _velocity = value; }
         }
 
-        public Bullet(char icon, float x, float y, float speed, float velocityX, float velocityY,
-            Color color, string name = "Bullet") : base(icon, x, y, color, name)
+        public Bullet(float x, float y, float speed, float velocityX, float velocityY,
+             string name = "Bullet", string path = "") : base(x, y, name, path)
         {
             _speed = speed;
             _velocity.X = velocityX;
             _velocity.Y = velocityY;
             Collider = new CircleCollider(10, this);
+            _basePosition = Position;
         }
 
         public override void Start()

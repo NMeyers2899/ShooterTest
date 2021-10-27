@@ -13,6 +13,7 @@ namespace MathForGames
         private int _height;
         private int _fontSize;
         private Font _font;
+        public Color FontColor;
 
         /// <summary>
         /// The text that will appear in the text box.
@@ -60,8 +61,8 @@ namespace MathForGames
         /// <param name="width"> The width of the text box. </param>
         /// <param name="height"> The height of the text box. </param>
         /// <param name="text"> The text being displayed. </param>
-        public UIText(float x, float y, string name, Color color, int width, int height, int fontSize, string text = "")
-            : base('\0', x, y, color, name)
+        public UIText(float x, float y, string name, Color color, int width, int height, int fontSize, 
+            string text = "") : base(x, y, name, "")
         {
             _text = text;
             _width = width;
@@ -69,6 +70,7 @@ namespace MathForGames
 
             _font = Raylib.LoadFont("resources/fonts/alagard.png");
             _fontSize = fontSize;
+            FontColor = color;
         }
 
         /// <summary>

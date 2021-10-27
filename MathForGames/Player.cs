@@ -29,8 +29,8 @@ namespace MathForGames
             get { return _health; }
         }
 
-        public Player(char icon, float x, float y, float speed, Color color, string name = "Player") 
-            : base(icon, x, y, color, name)
+        public Player(float x, float y, float speed, string name = "Player", string path = "") 
+            : base(x, y, name, path)
         {
             _speed = speed;
         }
