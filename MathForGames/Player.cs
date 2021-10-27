@@ -47,22 +47,26 @@ namespace MathForGames
 
             if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT)))
             {
-                Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, -1, 0, Color.WHITE);
+                Bullet bullet = new Bullet(Position.X, Position.Y, 200, -1, 0, "Bullet", "Images/bullet.png");
+                bullet.SetScale(1000, 600);
                 currentScene.AddActor(bullet);
             }
             if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_RIGHT)))
             {
-                Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, 1, 0, Color.WHITE);
+                Bullet bullet = new Bullet(Position.X, Position.Y, 200, 1, 0, "Bullet", "Images/bullet.png");
+                bullet.SetScale(1000, 600);
                 currentScene.AddActor(bullet);
             }
             if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_UP)))
             {
-                Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, 0, -1, Color.WHITE);
+                Bullet bullet = new Bullet(Position.X, Position.Y, 200, 0, -1, "Bullet", "Images/bullet.png");
+                bullet.SetScale(1000, 600);
                 currentScene.AddActor(bullet);
             }
             if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN)))
             {
-                Bullet bullet = new Bullet('.', Position.X, Position.Y, 200, 0, 1, Color.WHITE);
+                Bullet bullet = new Bullet(Position.X, Position.Y, 200, 0, 1, "Bullet", "Images/bullet.png");
+                bullet.SetScale(1000, 600);
                 currentScene.AddActor(bullet);
             }
 
@@ -91,12 +95,6 @@ namespace MathForGames
             else if (actor is Enemy && Health > 0)
             {
                 _health--;
-                Position = new Vector2(700, 300);
-            }
-
-            if(actor.Name == "Goal")
-            {
-                currentScene.TryRemoveActor(actor);
                 Position = new Vector2(700, 300);
             }
         }

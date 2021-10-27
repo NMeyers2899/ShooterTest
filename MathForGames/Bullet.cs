@@ -50,7 +50,8 @@ namespace MathForGames
 
             Position += Velocity;
 
-            if (Position.X >= 900 || Position.Y >= 900 || Position.X <= -100 || Position.Y <= -100)
+            if(Position.X - _basePosition.X > 150 || Position.X - _basePosition.X < - 150 ||
+                Position.Y - _basePosition.Y > 150 || Position.Y - _basePosition.Y < - 150)
                 currentScene.TryRemoveActor(this);
         }
 

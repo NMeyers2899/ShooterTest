@@ -81,7 +81,7 @@ namespace MathForGames
             // Creates a new rectangle that will act as the borders for the text.
             Rectangle textBox = new Rectangle(Position.X, Position.Y, Width, Height);
             // Draws the text box for the text.
-            Raylib.DrawTextRec(_font, Text, textBox, FontSize, 1, true, Icon.Color);
+            Raylib.DrawTextRec(_font, Text, textBox, FontSize, 1, true, Color.WHITE);
         }
     }
 }

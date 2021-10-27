@@ -25,9 +25,7 @@ namespace MathForGames
         /// </summary>
         public virtual void Start()
         {
-            // Loops through the _actors array and gets all actors in it to Start.
-            for(int i = 0; i < _actors.Length; i++)
-                _actors[i].Start();
+
         }
 
         /// <summary>
@@ -68,11 +66,6 @@ namespace MathForGames
                 UIText victoryMessage = new UIText(400, 200, "Victory Message", Color.WHITE, 100, 100, 12,
                     "Level Clear!");
                 AddUIElement(victoryMessage);
-
-                Actor goal = new Actor('0', 250, 250, Color.GREEN, "Goal");
-                AABBCollider goalCollider = new AABBCollider(50, 50, goal);
-                goal.Collider = goalCollider;
-                AddActor(goal);
 
                 _victoryMessageDisplayed = true;
             }
