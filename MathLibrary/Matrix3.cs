@@ -13,8 +13,8 @@ namespace MathLibrary
                        float m20, float m21, float m22)
         {
             M00 = m00; M01 = m01; M02 = m02;
-            M10 = m10; M11 = m10; M12 = m10;
-            M20 = m20; M21 = m20; M22 = m20;
+            M10 = m10; M11 = m11; M12 = m12;
+            M20 = m20; M21 = m21; M22 = m22;
         }
 
         public static Matrix3 Identity
@@ -56,12 +56,23 @@ namespace MathLibrary
 
         public static Matrix3 CreateRotation(float radians)
         {
-
+            return new Matrix3((float)Math.Cos(radians), (float)-Math.Sin(radians), 0,
+                               (float)Math.Sin(radians), (float)Math.Cos(radians), 0,
+                               0,                        0,                        1);
         }
 
-        public static Matrix3 CreateTranslation(Vector2 translation)
+        public static Matrix3 CreateTranslation(float x, float y)
         {
+            return new Matrix3(1, 0, x,
+                               0, 1, y,
+                               0, 0, 1);
+        }
 
+        public static Matrix3 CreateScale(float x, float y)
+        {
+            return new Matrix3(x, 0, 0,
+                               0, y, 0,
+                               0, 0, 1);
         }
     }
 }

@@ -57,7 +57,9 @@ namespace MathForGames
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
             if (GetTargetInSight())
-                Position += Velocity;
+            {
+                Translate(Velocity.X, Velocity.Y);
+            }        
         }
 
         public override void Draw()

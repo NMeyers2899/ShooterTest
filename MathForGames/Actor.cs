@@ -55,7 +55,7 @@ namespace MathForGames
 
         public Actor(Vector2 position, string name = "Actor", string path = "")
         {
-            Position = position;
+            SetTranslation(position.X, position.Y);
             _name = name;
 
             if (path != "")
@@ -109,10 +109,57 @@ namespace MathForGames
             return Collider.CheckForCollision(other);
         }
 
+        /// <summary>
+        /// Sets the position of the actor
+        /// </summary>
+        /// <param name="translationX"> The new x position. </param>
+        /// <param name="translationY"> The new y position. </param>
+        public void SetTranslation(float translationX, float translationY)
+        {
+            _translation = Matrix3.CreateTranslation(translationX, translationY);
+        }
+
+        /// <summary>
+        /// Applies the given values to the current translation
+        /// </summary>
+        /// <param name="translationX"> The amount to move on the x. </param>
+        /// <param name="translationY"> The amount to move on the y. </param>
+        public void Translate(float translationX, float translationY)
+        {
+            _translation *= Matrix3.CreateTranslation(translationX, translationY);
+        }
+
+        /// <summary>
+        /// Set the rotation of the actor.
+        /// </summary>
+        /// <param name="radians"> The angle of the new rotation in radians. </param>
+        public void SetRotation(float radians)
+        {
+            _rotation = Matrix3.CreateRotation(radians);
+        }
+
+        /// <summary>
+        /// Adds a roation to the current transform's rotation.
+        /// </summary>
+        /// <param name="radians"> The angle in radians to turn. </param>
+        public void Rotate(float radians)
+        {
+            _rotation *= Matrix3.CreateRotation(radians);
+        }
+
         public void SetScale(float x, float y)
         {
-            _transform.M00 = x;
-            _transform.M11 = y;
+            _scale = Matrix3.CreateScale(x, y);
+        }
+
+        /// <summary>
+        /// Scales the actor by the given amount.
+        /// </summary>
+        /// <param name="x"> The value to scale on the x axis. </param>
+        /// <param name="y"> The value to scale on the y axis. </param>
+        public void Scale(float x, float y)
+        {
+            _scale *= Matrix3.CreateScale(x, y);
         }
     }
 }

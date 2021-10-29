@@ -82,12 +82,12 @@ namespace MathForGames
             enemy3.Collider = enemy3BoxCollider;
             enemy3.SetScale(50, 50);
 
-            Enemy enemy4 = new Enemy(10, 10, 90, 100, 1, player, "Enemy", "Images/enemy.png");
+            Enemy enemy4 = new Enemy(10, 10, 120, 100, 1, player, "Enemy", "Images/enemy.png");
             AABBCollider enemy4BoxCollider = new AABBCollider(50, 50, enemy4);
             enemy4.Collider = enemy4BoxCollider;
             enemy4.SetScale(50, 50);
 
-            Enemy enemy5 = new Enemy(200, 10, 90, 100, 1, player, "Enemy", "Images/enemy.png");
+            Enemy enemy5 = new Enemy(200, 10, 120, 100, 1, player, "Enemy", "Images/enemy.png");
             AABBCollider enemy5BoxCollider = new AABBCollider(50, 50, enemy5);
             enemy5.Collider = enemy5BoxCollider;
             enemy5.SetScale(50, 50);

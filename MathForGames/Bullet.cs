@@ -48,11 +48,7 @@ namespace MathForGames
 
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
-            Position += Velocity;
-
-            if(Position.X - _basePosition.X > 150 || Position.X - _basePosition.X < - 150 ||
-                Position.Y - _basePosition.Y > 150 || Position.Y - _basePosition.Y < - 150)
-                currentScene.TryRemoveActor(this);
+            Translate(Velocity.X, Velocity.Y);
         }
 
         public override void Draw()

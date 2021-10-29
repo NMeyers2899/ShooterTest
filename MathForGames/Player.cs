@@ -37,8 +37,6 @@ namespace MathForGames
 
         public override void Update(float deltaTime, Scene currentScene)
         {
-            base.Update(deltaTime, currentScene);
-
             // Get the player input direction.
             int xDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_A)) 
                 + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_D));
@@ -48,25 +46,25 @@ namespace MathForGames
             if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT)))
             {
                 Bullet bullet = new Bullet(Position.X, Position.Y, 200, -1, 0, "Bullet", "Images/bullet.png");
-                bullet.SetScale(1000, 600);
+                bullet.SetScale(20, 20);
                 currentScene.AddActor(bullet);
             }
             if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_RIGHT)))
             {
                 Bullet bullet = new Bullet(Position.X, Position.Y, 200, 1, 0, "Bullet", "Images/bullet.png");
-                bullet.SetScale(1000, 600);
+                bullet.SetScale(20, 20);
                 currentScene.AddActor(bullet);
             }
             if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_UP)))
             {
                 Bullet bullet = new Bullet(Position.X, Position.Y, 200, 0, -1, "Bullet", "Images/bullet.png");
-                bullet.SetScale(1000, 600);
+                bullet.SetScale(20, 20);
                 currentScene.AddActor(bullet);
             }
             if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN)))
             {
                 Bullet bullet = new Bullet(Position.X, Position.Y, 200, 0, 1, "Bullet", "Images/bullet.png");
-                bullet.SetScale(1000, 600);
+                bullet.SetScale(20, 20);
                 currentScene.AddActor(bullet);
             }
 
@@ -75,7 +73,8 @@ namespace MathForGames
 
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
-            Position += Velocity;
+            Translate(Velocity.X, Velocity.Y);
+            base.Update(deltaTime, currentScene);
         }
 
         public override void Draw()
@@ -86,17 +85,17 @@ namespace MathForGames
 
         public override void OnCollision(Actor actor, Scene currentScene)
         {
-            if (actor is Enemy && Health <= 0)
-            {
-                currentScene.TryRemoveActor(this);
-                UIText deathMessage = new UIText(400, 200, "Death Message", Color.WHITE, 100, 100, 12, "You died.");
-                currentScene.AddActor(deathMessage);
-            }
-            else if (actor is Enemy && Health > 0)
-            {
-                _health--;
-                Position = new Vector2(700, 300);
-            }
+            //if (actor is Enemy && Health <= 0)
+            //{
+            //    currentScene.TryRemoveActor(this);
+            //    UIText deathMessage = new UIText(400, 200, "Death Message", Color.WHITE, 100, 100, 12, "You died.");
+            //    currentScene.AddActor(deathMessage);
+            //}
+            //else if (actor is Enemy && Health > 0)
+            //{
+            //    _health--;
+            //    Position = new Vector2(700, 300);
+            //}
         }
     }
 }
