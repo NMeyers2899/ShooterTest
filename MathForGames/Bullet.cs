@@ -11,6 +11,7 @@ namespace MathForGames
         private float _speed;
         private Vector2 _velocity;
         private Vector2 _basePosition;
+        private int _timer;
 
         public float Speed
         {
@@ -41,6 +42,9 @@ namespace MathForGames
 
         public override void Update(float deltaTime, Scene currentScene)
         {
+            if (_timer >= 50)
+                currentScene.TryRemoveActor(this);
+
             base.Update(deltaTime, currentScene);
 
             // Create a vector that stores the move input.
@@ -49,6 +53,8 @@ namespace MathForGames
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
             Translate(Velocity.X, Velocity.Y);
+
+            _timer++;
         }
 
         public override void Draw()

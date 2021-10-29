@@ -85,17 +85,17 @@ namespace MathForGames
 
         public override void OnCollision(Actor actor, Scene currentScene)
         {
-            //if (actor is Enemy && Health <= 0)
-            //{
-            //    currentScene.TryRemoveActor(this);
-            //    UIText deathMessage = new UIText(400, 200, "Death Message", Color.WHITE, 100, 100, 12, "You died.");
-            //    currentScene.AddActor(deathMessage);
-            //}
-            //else if (actor is Enemy && Health > 0)
-            //{
-            //    _health--;
-            //    Position = new Vector2(700, 300);
-            //}
+            if (actor is Enemy && Health <= 0)
+            {
+                currentScene.TryRemoveActor(this);
+                UIText deathMessage = new UIText(400, 200, "Death Message", Color.WHITE, 100, 100, 12, "You died.");
+                currentScene.AddActor(deathMessage);
+            }
+            else if (actor is Enemy && Health > 0)
+            {
+                _health--;
+                Position = new Vector2(700, 300);
+            }
         }
     }
 }
