@@ -32,7 +32,7 @@ namespace MathForGames
             _velocity.X = velocityX;
             _velocity.Y = velocityY;
             Collider = new CircleCollider(10, this);
-            _basePosition = Position;
+            _basePosition = LocalPosition;
         }
 
         public override void Start()

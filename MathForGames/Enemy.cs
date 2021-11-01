@@ -52,13 +52,13 @@ namespace MathForGames
             base.Update(deltaTime, currentScene);
 
             // Create a vector that stores the move input.
-            Vector2 moveDirection = _target.Position - Position;
+            Vector2 moveDirection = _target.LocalPosition - LocalPosition;
 
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
             if (GetTargetInSight())
             {
-                LookAt(_target.Position);
+                LookAt(_target.LocalPosition);
                 Translate(Velocity.X, Velocity.Y);
             }        
         }
@@ -71,7 +71,7 @@ namespace MathForGames
 
         public bool GetTargetInSight()
         {
-            Vector2 directionOfTarget = (_target.Position - Position).Normalized;
+            Vector2 directionOfTarget = (_target.LocalPosition - LocalPosition).Normalized;
 
             float dotProduct = Vector2.DotProduct(directionOfTarget, Forward);
 

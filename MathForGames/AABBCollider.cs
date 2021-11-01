@@ -34,7 +34,7 @@ namespace MathForGames
         /// </summary>
         public float Left
         {
-            get { return Owner.Position.X - Width / 2; }
+            get { return Owner.LocalPosition.X - Width / 2; }
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace MathForGames
         /// </summary>
         public float Right
         {
-            get  { return Owner.Position.X + Width / 2; }
+            get  { return Owner.LocalPosition.X + Width / 2; }
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace MathForGames
         /// </summary>
         public float Top
         {
-            get  {  return Owner.Position.Y - Height / 2; }
+            get  {  return Owner.LocalPosition.Y - Height / 2; }
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace MathForGames
         /// </summary>
         public float Bottom
         {
-            get  { return Owner.Position.Y + Height / 2; }
+            get  { return Owner.LocalPosition.Y + Height / 2; }
         }
 
         public AABBCollider(float width, float height, Actor owner) : base(owner, ColliderType.AABB)
