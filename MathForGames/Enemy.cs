@@ -58,6 +58,7 @@ namespace MathForGames
 
             if (GetTargetInSight())
             {
+                LookAt(_target.Position);
                 Translate(Velocity.X, Velocity.Y);
             }        
         }

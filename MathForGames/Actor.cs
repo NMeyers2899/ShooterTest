@@ -11,7 +11,7 @@ namespace MathForGames
         private string _name;
         private bool _started;
         private Collider _collider;
-        private Vector2 _forward = new Vector2(1, 0);
+        private Vector2 _forward;
         private Matrix3 _transform = Matrix3.Identity;
         private Matrix3 _translation = Matrix3.Identity;
         private Matrix3 _rotation = Matrix3.Identity;
@@ -28,17 +28,29 @@ namespace MathForGames
 
         public Vector2 Position
         {
-            get { return new Vector2(_transform.M02, _transform.M12); }
-            set
-            {
-                _transform.M02 = value.X;
-                _transform.M12 = value.Y;
-            }
+            get { return new Vector2(_translation.M02, _translation.M12); }
+            set { SetTranslation(value.X, value.Y); }
+        }
+
+        public Vector2 Size
+        {
+            get { return new Vector2(_scale.M00, _scale.M11); }
+            set { SetScale(value.X, value.Y); }
         }
 
         public string Name
         {
             get { return _name; }
+        }
+
+        public Vector2 Forward
+        {
+            get { return new Vector2(_rotation.M00, _rotation.M10); }
+            set 
+            { 
+                Vector2 point = value.Normalized + Position;
+                LookAt(point);
+            }
         }
 
         public Collider Collider
@@ -110,7 +122,7 @@ namespace MathForGames
         }
 
         /// <summary>
-        /// Sets the position of the actor
+        /// Sets the position of the actor.
         /// </summary>
         /// <param name="translationX"> The new x position. </param>
         /// <param name="translationY"> The new y position. </param>
@@ -120,7 +132,7 @@ namespace MathForGames
         }
 
         /// <summary>
-        /// Applies the given values to the current translation
+        /// Applies the given values to the current translation.
         /// </summary>
         /// <param name="translationX"> The amount to move on the x. </param>
         /// <param name="translationY"> The amount to move on the y. </param>
@@ -160,6 +172,37 @@ namespace MathForGames
         public void Scale(float x, float y)
         {
             _scale *= Matrix3.CreateScale(x, y);
+        }
+
+        /// <summary>
+        /// Rotates the actor to face the given position.
+        /// </summary>
+        /// <param name="position"> The position the actor should be looking towards. </param>
+        public void LookAt(Vector2 position)
+        {
+            // Find the direction that the actor should look in.
+            Vector2 direction = (position - Position).Normalized;
+
+            // Use the dot product to find the angle the actor needs to rotate.
+            float dotProduct = Vector2.DotProduct(direction, Forward);
+
+            if (dotProduct > 1)
+                dotProduct = 1;
+            
+            float angle = (float)Math.Acos(dotProduct);
+
+            // Find the perpindiculat vector to the direction.
+            Vector2 perpDirection = new Vector2(direction.Y, -direction.X);
+
+            // Find the dot product of the perpindicular vector and the current forward.
+            float perpDot = Vector2.DotProduct(perpDirection, Forward);
+
+            // If the result is not zero...
+            if (perpDot != 0)
+                // ...use it to change the sign of the angle to be either positive or negative.
+                angle *= -perpDot / Math.Abs(perpDot);
+
+            Rotate(angle);
         }
     }
 }

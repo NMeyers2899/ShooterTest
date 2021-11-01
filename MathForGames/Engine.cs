@@ -66,6 +66,7 @@ namespace MathForGames
             AABBCollider playerBoxCollider = new AABBCollider(48, 48, player);
             player.Collider = playerBoxCollider;
             player.SetScale(50, 50);
+            player.SetRotation(1);
 
             Enemy enemy1 = new Enemy(100, 100, 120, 100, 1, player, "Enemy", "Images/enemy.png");
             AABBCollider enemy1BoxCollider = new AABBCollider(50, 50, enemy1);
