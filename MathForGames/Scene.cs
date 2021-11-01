@@ -12,7 +12,6 @@ namespace MathForGames
         /// </summary>
         private Actor[] _actors;
         private Actor[] _UIElements;
-        private bool _victoryMessageDisplayed = false;
 
         public Scene()
         {
@@ -33,8 +32,6 @@ namespace MathForGames
         /// </summary>
         public virtual void Update(float deltaTime, Scene currentScene)
         {
-            bool allEnemiesDead = true;
-
             // Loops through the array to get each character to Update.
             for(int i = 0; i < _actors.Length; i++)
             {
@@ -50,9 +47,6 @@ namespace MathForGames
                 {
                     if(i < _actors.Length)
                     {
-                        if (_actors[j] is Enemy)
-                            allEnemiesDead = false;
-
                         // If they have collided...
                         if (_actors[i].CheckForCollision(_actors[j]) && j != i)
                             // ...calls the OnCollision function for the actor.
@@ -60,17 +54,6 @@ namespace MathForGames
                     }
                 }
             }
-
-            if (allEnemiesDead && !_victoryMessageDisplayed)
-            {
-                UIText victoryMessage = new UIText(400, 200, "Victory Message", Color.WHITE, 100, 100, 12,
-                    "Level Clear!");
-                AddUIElement(victoryMessage);
-
-                _victoryMessageDisplayed = true;
-            }
-
-            allEnemiesDead = true;
         }
 
         public virtual void UpdateUI(float deltaTime, Scene currentScene)

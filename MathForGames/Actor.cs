@@ -31,33 +31,37 @@ namespace MathForGames
 
         public Vector2 LocalPosition
         {
-            get { return new Vector2(_translation.M02, _translation.M12); }
+            get { return new Vector2(_localTransform.M02, _localTransform.M12); }
             set { SetTranslation(value.X, value.Y); }
         }
 
         public Vector2 WorldPosition
         {
-            get; set;
+            get { return new Vector2(_globalTransform.M02, _globalTransform.M12); }
+            set { SetTranslation(value.X, value.Y); }
         }
 
         public Matrix3 GlobalTransform
         {
-            get; set;
+            get { return _globalTransform; }
+            private set { _globalTransform = value; }
         }
 
-        public Matrix3 LocalTransforms
+        public Matrix3 LocalTransform
         {
-            get; set;
+            get { return _localTransform; }
+            private set { _localTransform = value; }
         }
 
         public Actor Parent
         {
-            get; set;
+            get { return _parent; }
+            set { _parent = value; }
         }
 
         public Actor[] Children
         {
-            get;
+            get { return _children; }
         }
 
         public Vector2 Size
@@ -93,17 +97,20 @@ namespace MathForGames
             set { _sprite = value; }
         }
 
-        public Actor(Vector2 position, string name = "Actor", string path = "")
+        public Actor(Vector2 position, string name = "Actor", string path = "", Actor parent = null)
         {
             SetTranslation(position.X, position.Y);
             _name = name;
 
             if (path != "")
                 _sprite = new Sprite(path);
+
+            if (parent != null)
+                _parent = parent;
         }
 
-        public Actor(float x, float y, string name = "Actor", string path = "")
-            : this(new Vector2 { X = x, Y = y }, name, path) { }
+        public Actor(float x, float y, string name = "Actor", string path = "", Actor parent = null)
+            : this(new Vector2 { X = x, Y = y }, name, path, parent) { }
 
         public Actor() { }
 
@@ -116,12 +123,14 @@ namespace MathForGames
         {
             _localTransform = _translation * _rotation * _scale;
             Console.WriteLine(Name + LocalPosition.X + " , " + LocalPosition.Y);
+
+            UpdateTransforms();
         }
 
         public virtual void Draw()
         {
             if(_sprite != null)
-                _sprite.Draw(_localTransform);
+                _sprite.Draw(_globalTransform);
         }
 
         public virtual void End()
@@ -136,19 +145,24 @@ namespace MathForGames
 
         public void UpdateTransforms()
         {
-
+            if (_parent != null)
+                _globalTransform = _parent.GlobalTransform * LocalTransform;
+            else
+                GlobalTransform = LocalTransform;
         }
 
         public void AddChild(Actor child)
         {
-            Actor[] tempArray = new Actor[_children.Length];
+            Actor[] tempArray = new Actor[_children.Length + 1];
 
-            for (int i = 0; i <= _children.Length; i++)
+            for (int i = 0; i < _children.Length; i++)
                 tempArray[i] = _children[i];
 
             tempArray[_children.Length] = child;
 
             _children = tempArray;
+
+            child.Parent = this;
         }
 
         public bool RemoveChild(Actor child)
@@ -158,7 +172,7 @@ namespace MathForGames
             int j = 0;
             bool childRemoved = false;
 
-            for (int i = 0; i <= _children.Length; i++)
+            for (int i = 0; i < _children.Length; i++)
             {
                 if (_children[i].Name != child.Name || childRemoved)
                 {
@@ -170,6 +184,9 @@ namespace MathForGames
             }
 
             _children = tempArray;
+
+            if (childRemoved)
+                child.Parent = null;
 
             return childRemoved;
         }
