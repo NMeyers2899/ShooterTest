@@ -41,8 +41,8 @@ namespace MathForGames
             set {
                 if (Parent != null)
                 {
-                    SetTranslation((value.X - Parent.GlobalTransform.M02) / Parent.Size.Magnitude,
-                                   (value.Y - Parent.GlobalTransform.M12) / Parent.Size.Magnitude);
+                    SetTranslation((value.X - Parent.GlobalTransform.M02) / Parent.ScaleX,
+                                   (value.Y - Parent.GlobalTransform.M12) / Parent.ScaleY);
                 }
                 else
                     SetTranslation(value.X, value.Y);
@@ -76,6 +76,15 @@ namespace MathForGames
         {
             get { return new Vector2(_scale.M00, _scale.M11); }
             set { SetScale(value.X, value.Y); }
+        }
+
+        public float ScaleX
+        {
+            get { return new Vector2 (_scale.M00, _scale.M01).Magnitude; }
+        }
+        public float ScaleY
+        {
+            get { return new Vector2(_scale.M10, _scale.M11).Magnitude; }
         }
 
         public string Name
