@@ -36,7 +36,7 @@ namespace MathLibrary
             if (Magnitude == 0)
                 return new Vector3();
 
-            return this / Magnitude;
+            return this /= Magnitude;
         }
 
         public static float DotProduct(Vector3 lhs, Vector3 rhs)

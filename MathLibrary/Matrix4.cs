@@ -85,24 +85,24 @@ namespace MathLibrary
                                ((lhs.M30 * rhs.M03) + (lhs.M31 * rhs.M13) + (lhs.M32 * rhs.M23) + (lhs.M33 * rhs.M33)));
         }
 
-        public Matrix4 RotateX(float radians)
+        public Matrix4 CreateRotationX(float radians)
         {
             return new Matrix4(1, 0, 0, 0,
-                               0, (float)Math.Cos(radians), (float)Math.Sin(radians), 0,
-                               0, -(float)Math.Sin(radians), (float)Math.Cos(radians), 0,
+                               0, (float)Math.Cos(radians), -(float)Math.Sin(radians), 0,
+                               0, (float)Math.Sin(radians), (float)Math.Cos(radians), 0,
                                0, 0, 0, 1);
         }
-        public Matrix4 RotateY(float radians)
+        public Matrix4 CreateRotationY(float radians)
         {
-            return new Matrix4((float)Math.Cos(radians), 0, -(float)Math.Sin(radians), 0,
+            return new Matrix4((float)Math.Cos(radians), 0, (float)Math.Sin(radians), 0,
                                0, 1, 0, 0,
-                               (float)Math.Sin(radians), 0, (float)Math.Cos(radians), 0,
+                               -(float)Math.Sin(radians), 0, (float)Math.Cos(radians), 0,
                                0, 0, 0, 1);
         }
-        public Matrix4 RotateZ(float radians)
+        public Matrix4 CreateRotationZ(float radians)
         {
-            return new Matrix4((float)Math.Cos(radians), (float)Math.Sin(radians), 0, 0,
-                               -(float)Math.Sin(radians), (float)Math.Cos(radians), 0, 0,
+            return new Matrix4((float)Math.Cos(radians), -(float)Math.Sin(radians), 0, 0,
+                               (float)Math.Sin(radians), (float)Math.Cos(radians), 0, 0,
                                0, 0, 1, 0,
                                0, 0, 0, 1);
         }
