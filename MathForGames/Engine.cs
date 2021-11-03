@@ -60,46 +60,28 @@ namespace MathForGames
             Raylib.SetTargetFPS(60);
 
             Scene levelOne = new Scene();
-            Scene levelTwo = new Scene();
 
-            Player player = new Player(700, 300, 150, "Player", "Images/player.png");
-            AABBCollider playerBoxCollider = new AABBCollider(48, 48, player);
-            player.Collider = playerBoxCollider;
-            player.SetScale(50, 50);
-            player.SetRotation(1);
+            Actor sun = new Actor(400, 250, "The Sun", "Images/bullet.png");
+            sun.SetScale(200, 200);
+            AABBCollider sunCollider = new AABBCollider(50, 50, sun);
+            sun.Collider = sunCollider;
 
-            Enemy enemy1 = new Enemy(100, 100, 120, 100, 1, player, "Enemy", "Images/enemy.png");
-            AABBCollider enemy1BoxCollider = new AABBCollider(50, 50, enemy1);
-            enemy1.Collider = enemy1BoxCollider;
-            enemy1.SetScale(50, 50);
+            Actor planet1 = new Actor(0.7f, 0, "Planet1", "Images/bullet.png", sun);
+            planet1.SetScale(0.5f, 0.5f);
+            AABBCollider planet1Collider = new AABBCollider(50, 50, planet1);
+            planet1.Collider = planet1Collider;
 
-            Enemy enemy2 = new Enemy(200, 300, 120, 100, 1, player, "Enemy", "Images/enemy.png");
-            AABBCollider enemy2BoxCollider = new AABBCollider(50, 50, enemy2);
-            enemy2.Collider = enemy2BoxCollider;
-            enemy2.SetScale(50, 50);
-
-            Enemy enemy3 = new Enemy(350, 160, 120, 100, 1, player, "Enemy", "Images/enemy.png");
-            AABBCollider enemy3BoxCollider = new AABBCollider(50, 50, enemy3);
-            enemy3.Collider = enemy3BoxCollider;
-            enemy3.SetScale(50, 50);
-
-            Enemy enemy4 = new Enemy(10, 10, 120, 100, 1, player, "Enemy", "Images/enemy.png");
-            AABBCollider enemy4BoxCollider = new AABBCollider(50, 50, enemy4);
-            enemy4.Collider = enemy4BoxCollider;
-            enemy4.SetScale(50, 50);
-
-            Enemy enemy5 = new Enemy(200, 10, 120, 100, 1, player, "Enemy", "Images/enemy.png");
-            AABBCollider enemy5BoxCollider = new AABBCollider(50, 50, enemy5);
-            enemy5.Collider = enemy5BoxCollider;
-            enemy5.SetScale(50, 50);
+            Actor planet2 = new Actor(0.4f, 0, "Planet2", "Images/bullet.png", sun);
+            planet1.SetScale(0.7f, 0.7f);
+            AABBCollider planet2Collider = new AABBCollider(50, 50, planet2);
+            planet2.Collider = planet2Collider;
 
             AddScene(levelOne);
-            levelOne.AddActor(player);
-            levelOne.AddActor(enemy1);
-            levelOne.AddActor(enemy2);
-            levelOne.AddActor(enemy3);
-            levelOne.AddActor(enemy4);
-            levelOne.AddActor(enemy5);
+            levelOne.AddActor(sun);
+            levelOne.AddActor(planet1);
+            levelOne.AddActor(planet2);
+            sun.AddChild(planet1);
+            planet1.AddChild(planet2);
 
             _scenes[_currentSceneIndex].Start();
         }
