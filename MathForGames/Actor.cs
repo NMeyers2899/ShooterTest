@@ -38,7 +38,15 @@ namespace MathForGames
         public Vector2 WorldPosition
         {
             get { return new Vector2(_globalTransform.M02, _globalTransform.M12); }
-            set { SetTranslation(value.X, value.Y); }
+            set {
+                if (Parent != null)
+                {
+                    SetTranslation((value.X - Parent.GlobalTransform.M02) / Parent.Size.Magnitude,
+                                   (value.Y - Parent.GlobalTransform.M12) / Parent.Size.Magnitude);
+                }
+                else
+                    SetTranslation(value.X, value.Y);
+            }
         }
 
         public Matrix3 GlobalTransform
@@ -147,7 +155,7 @@ namespace MathForGames
         public void UpdateTransforms()
         {
             if (_parent != null)
-                _globalTransform = _parent.GlobalTransform * LocalTransform;
+                GlobalTransform = _parent.GlobalTransform * LocalTransform;
             else
                 GlobalTransform = LocalTransform;
         }
