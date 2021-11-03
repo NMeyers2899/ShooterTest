@@ -85,21 +85,26 @@ namespace MathLibrary
                                ((lhs.M30 * rhs.M03) + (lhs.M31 * rhs.M13) + (lhs.M32 * rhs.M23) + (lhs.M33 * rhs.M33)));
         }
 
-        public Matrix4 CreateRotationX(float radians)
+        public static Vector4 operator *(Matrix4 lhs, Vector4 rhs)
+        {
+            return new Vector4();
+        }
+
+        public static Matrix4 CreateRotationX(float radians)
         {
             return new Matrix4(1, 0, 0, 0,
                                0, (float)Math.Cos(radians), -(float)Math.Sin(radians), 0,
                                0, (float)Math.Sin(radians), (float)Math.Cos(radians), 0,
                                0, 0, 0, 1);
         }
-        public Matrix4 CreateRotationY(float radians)
+        public static Matrix4 CreateRotationY(float radians)
         {
             return new Matrix4((float)Math.Cos(radians), 0, (float)Math.Sin(radians), 0,
                                0, 1, 0, 0,
                                -(float)Math.Sin(radians), 0, (float)Math.Cos(radians), 0,
                                0, 0, 0, 1);
         }
-        public Matrix4 CreateRotationZ(float radians)
+        public static Matrix4 CreateRotationZ(float radians)
         {
             return new Matrix4((float)Math.Cos(radians), -(float)Math.Sin(radians), 0, 0,
                                (float)Math.Sin(radians), (float)Math.Cos(radians), 0, 0,
@@ -115,11 +120,27 @@ namespace MathLibrary
                                0, 0, 0, 1);
         }
 
+        public static Matrix4 CreateTranslation(Vector3 translation)
+        {
+            return new Matrix4(1, 0, 0, translation.X,
+                               0, 1, 0, translation.Y,
+                               0, 0, 1, translation.Z,
+                               0, 0, 0, 1);
+        }
+
         public static Matrix4 CreateScale(float x, float y, float z)
         {
             return new Matrix4(x, 0, 0, 0,
                                0, y, 0, 0,
                                0, 0, z, 0,
+                               0, 0, 0, 1);
+        }
+
+        public static Matrix4 CreateScale(Vector3 scale)
+        {
+            return new Matrix4(scale.X, 0, 0, 0,
+                               0, scale.Y, 0, 0,
+                               0, 0, scale.Z, 0,
                                0, 0, 0, 1);
         }
     }

@@ -14,6 +14,7 @@ namespace MathForGames
         private static int _currentSceneIndex;
         private Scene[] _scenes = new Scene[0];
         private Stopwatch _stopWatch = new Stopwatch();
+        private Camera3D _camera = new Camera3D();
 
         /// <summary>
         /// Called to begin the application.
@@ -48,6 +49,20 @@ namespace MathForGames
             End();
         }
 
+        private void InitializeCamera()
+        {
+            // Camera position.
+            _camera.position = new System.Numerics.Vector3(0, 10, 10);
+            // Point the camera is focused on.
+            _camera.target = new System.Numerics.Vector3(0, 0, 0);
+            // Camera up vector(rotation towards target).
+            _camera.up = new System.Numerics.Vector3(0, 1, 0);
+            // Camera's field of view Y.
+            _camera.fovy = 45;
+            // Camera mode type.
+            _camera.projection = CameraProjection.CAMERA_PERSPECTIVE; 
+        }
+
         /// <summary>
         /// Initalizes important variables for the application.
         /// </summary>
@@ -58,28 +73,13 @@ namespace MathForGames
             // Creates a window using Raylib.
             Raylib.InitWindow(800, 450, "Math For Games");
             Raylib.SetTargetFPS(60);
+            InitializeCamera();
 
             Scene levelOne = new Scene();
+            Player baseCube = new Player(0, 2, 0, 15, "Cube");
 
-            Actor sun = new Actor(400, 250, "The Sun", "Images/bullet.png");
-            sun.SetScale(200, 200);
-            AABBCollider sunCollider = new AABBCollider(50, 50, sun);
-            sun.Collider = sunCollider;
-
-            Actor planet1 = new Actor(0.7f, 0, "Planet1", "Images/bullet.png", sun);
-            planet1.SetScale(0.5f, 0.5f);
-            AABBCollider planet1Collider = new AABBCollider(50, 50, planet1);
-            planet1.Collider = planet1Collider;
-
-            Actor planet2 = new Actor(0.4f, 0, "Planet2", "Images/bullet.png", sun);
-            planet1.SetScale(0.7f, 0.7f);
-            AABBCollider planet2Collider = new AABBCollider(50, 50, planet2);
-            planet2.Collider = planet2Collider;
-
+            levelOne.AddActor(baseCube);
             AddScene(levelOne);
-            sun.AddChild(planet1);
-            planet1.AddChild(planet2);
-            levelOne.AddActor(sun);
 
             _scenes[_currentSceneIndex].Start();
         }
@@ -103,11 +103,15 @@ namespace MathForGames
         private void Draw()
         {
             Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.BLACK);
+            Raylib.BeginMode3D(_camera);
+
+            Raylib.ClearBackground(Color.GRAY);
+            Raylib.DrawGrid(50, 1);
 
             _scenes[_currentSceneIndex].Draw();
             _scenes[_currentSceneIndex].DrawUI();
 
+            Raylib.EndMode3D();
             Raylib.EndDrawing();
         }
 

@@ -61,8 +61,8 @@ namespace MathForGames
         /// <param name="width"> The width of the text box. </param>
         /// <param name="height"> The height of the text box. </param>
         /// <param name="text"> The text being displayed. </param>
-        public UIText(float x, float y, string name, Color color, int width, int height, int fontSize, 
-            string text = "") : base(x, y, name, "")
+        public UIText(float x, float y, float z, string name, Color color, int width, int height, int fontSize, 
+            string text = "") : base(x, y, z, name)
         {
             _text = text;
             _width = width;

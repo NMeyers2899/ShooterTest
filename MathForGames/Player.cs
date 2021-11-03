@@ -9,7 +9,7 @@ namespace MathForGames
     class Player : Actor
     {
         private float _speed;
-        private Vector2 _velocity;
+        private Vector3 _velocity;
         private int _health = 2;
 
         public float Speed
@@ -18,7 +18,7 @@ namespace MathForGames
             set { _speed = value; }
         }
 
-        public Vector2 Velocity
+        public Vector3 Velocity
         {
             get { return _velocity; }
             set { _velocity = value; }
@@ -29,8 +29,8 @@ namespace MathForGames
             get { return _health; }
         }
 
-        public Player(float x, float y, float speed, string name = "Player", string path = "") 
-            : base(x, y, name, path)
+        public Player(float x, float y, float z, float speed, string name = "Player", 
+            Shape shape = Shape.CUBE) : base(x, y, z, name, shape)
         {
             _speed = speed;
         }
@@ -40,36 +40,11 @@ namespace MathForGames
             // Get the player input direction.
             int xDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_A)) 
                 + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_D));
-            int yDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W))
+            int zDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
 
-            if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT)))
-            {
-                Bullet bullet = new Bullet(LocalPosition.X, LocalPosition.Y, 200, -1, 0, "Bullet", "Images/bullet.png");
-                bullet.SetScale(20, 20);
-                currentScene.AddActor(bullet);
-            }
-            if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_RIGHT)))
-            {
-                Bullet bullet = new Bullet(LocalPosition.X, LocalPosition.Y, 200, 1, 0, "Bullet", "Images/bullet.png");
-                bullet.SetScale(20, 20);
-                currentScene.AddActor(bullet);
-            }
-            if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_UP)))
-            {
-                Bullet bullet = new Bullet(LocalPosition.X, LocalPosition.Y, 200, 0, -1, "Bullet", "Images/bullet.png");
-                bullet.SetScale(20, 20);
-                currentScene.AddActor(bullet);
-            }
-            if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN)))
-            {
-                Bullet bullet = new Bullet(LocalPosition.X, LocalPosition.Y, 200, 0, 1, "Bullet", "Images/bullet.png");
-                bullet.SetScale(20, 20);
-                currentScene.AddActor(bullet);
-            }
-
             // Create a vector that stores the move input.
-            Vector2 moveDirection = new Vector2(xDirection, yDirection);
+            Vector3 moveDirection = new Vector3(xDirection, 0, zDirection);
 
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
@@ -83,22 +58,14 @@ namespace MathForGames
         public override void Draw()
         {
             base.Draw();
-            Collider.Draw();
+
+            if(Collider != null)
+                Collider.Draw();
         }
 
         public override void OnCollision(Actor actor, Scene currentScene)
         {
-            if (actor is Enemy && Health <= 0)
-            {
-                currentScene.TryRemoveActor(this);
-                UIText deathMessage = new UIText(400, 200, "Death Message", Color.WHITE, 100, 100, 12, "You died.");
-                currentScene.AddActor(deathMessage);
-            }
-            else if (actor is Enemy && Health > 0)
-            {
-                _health--;
-                LocalPosition = new Vector2(700, 300);
-            }
+
         }
     }
 }

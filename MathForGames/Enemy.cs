@@ -9,9 +9,9 @@ namespace MathForGames
     class Enemy : Actor
     {
         private float _speed;
-        private Vector2 _velocity;
+        private Vector3 _velocity;
         private Actor _target;
-        private Vector2 _forward = new Vector2(1, 0);
+        private Vector3 _forward = new Vector3(0, 0, 1);
         private float _maxViewAngle;
         private float _maxSightDistance;
         private int _health = 5;
@@ -22,13 +22,13 @@ namespace MathForGames
             set { _speed = value; }
         }
 
-        public Vector2 Velocity
+        public Vector3 Velocity
         {
             get { return _velocity; }
             set { _velocity = value; }
         }
 
-        public Vector2 Forward
+        public Vector3 Forward
         {
             get { return _forward; }
             set { _forward = value; }
@@ -38,8 +38,8 @@ namespace MathForGames
             get { return _health; }
         }
 
-        public Enemy(float x, float y, float speed, float maxSightDistance, float maxViewAngle,
-            Actor target, string name = "Enemy", string path = "") : base(x, y, name, path)
+        public Enemy(float x, float y, float z, float speed, float maxSightDistance, float maxViewAngle,
+            Actor target, string name = "Enemy") : base(x, y, z, name)
         {
             _target = target;
             _speed = speed;
@@ -52,14 +52,13 @@ namespace MathForGames
             base.Update(deltaTime, currentScene);
 
             // Create a vector that stores the move input.
-            Vector2 moveDirection = _target.LocalPosition - LocalPosition;
+            Vector3 moveDirection = _target.LocalPosition - LocalPosition;
 
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
             if (GetTargetInSight())
             {
-                LookAt(_target.LocalPosition);
-                Translate(Velocity.X, Velocity.Y);
+                Translate(Velocity.X, Velocity.Y, Velocity.Z);
             }        
         }
 
@@ -71,20 +70,16 @@ namespace MathForGames
 
         public bool GetTargetInSight()
         {
-            Vector2 directionOfTarget = (_target.LocalPosition - LocalPosition).Normalized;
+            Vector3 directionOfTarget = (_target.LocalPosition - LocalPosition).Normalized;
 
-            float dotProduct = Vector2.DotProduct(directionOfTarget, Forward);
+            float dotProduct = Vector3.DotProduct(directionOfTarget, Forward);
 
             return Math.Acos(dotProduct) < _maxViewAngle;
         }
 
         public override void OnCollision(Actor actor, Scene currentScene)
         {
-            if (actor is Bullet)
-            {
-                currentScene.TryRemoveActor(this);
-                currentScene.TryRemoveActor(actor);
-            }
+
         }
     }
 }

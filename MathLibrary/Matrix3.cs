@@ -65,6 +65,11 @@ namespace MathLibrary
                                ((lhs.M20 * rhs.M02) + (lhs.M21 * rhs.M12) + (lhs.M22 * rhs.M22)));
         }
 
+        public static Vector3 operator *(Matrix3 lhs, Vector3 rhs)
+        {
+            return new Vector3();
+        }
+
         public static Matrix3 CreateRotation(float radians)
         {
             return new Matrix3((float)Math.Cos(radians), (float)Math.Sin(radians), 0,
