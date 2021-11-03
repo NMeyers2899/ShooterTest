@@ -61,19 +61,27 @@ namespace MathForGames
 
             Scene levelOne = new Scene();
 
-            Actor sun = new Actor(300, 300, "The Sun", "Images/bullet.png");
-            sun.SetScale(100, 100);
+            Actor sun = new Actor(400, 250, "The Sun", "Images/bullet.png");
+            sun.SetScale(200, 200);
             AABBCollider sunCollider = new AABBCollider(50, 50, sun);
             sun.Collider = sunCollider;
 
-            Actor planet1 = new Actor(2, 0, "Planet1", "Images/bullet.png", sun);
+            Actor planet1 = new Actor(0.7f, 0, "Planet1", "Images/bullet.png", sun);
+            planet1.SetScale(0.5f, 0.5f);
             AABBCollider planet1Collider = new AABBCollider(50, 50, planet1);
             planet1.Collider = planet1Collider;
+
+            Actor planet2 = new Actor(0.4f, 0, "Planet2", "Images/bullet.png", sun);
+            planet1.SetScale(0.7f, 0.7f);
+            AABBCollider planet2Collider = new AABBCollider(50, 50, planet2);
+            planet2.Collider = planet2Collider;
 
             AddScene(levelOne);
             levelOne.AddActor(sun);
             levelOne.AddActor(planet1);
+            levelOne.AddActor(planet2);
             sun.AddChild(planet1);
+            planet1.AddChild(planet2);
 
             _scenes[_currentSceneIndex].Start();
         }

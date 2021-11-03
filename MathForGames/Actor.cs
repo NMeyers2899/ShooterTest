@@ -121,6 +121,7 @@ namespace MathForGames
 
         public virtual void Update(float deltaTime, Scene currentScene)
         {
+            Rotate(0.008f);
             _localTransform = _translation * _rotation * _scale;
             Console.WriteLine(Name + LocalPosition.X + " , " + LocalPosition.Y);
 
