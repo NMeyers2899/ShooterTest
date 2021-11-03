@@ -129,6 +129,12 @@ namespace MathForGames
 
             // Set the old array to the new array.
             _actors = tempArray;
+
+            if(actor.Children != null)
+            {
+                foreach (Actor child in actor.Children)
+                    AddActor(child);
+            }        
         }
 
         /// <summary>

@@ -77,11 +77,9 @@ namespace MathForGames
             planet2.Collider = planet2Collider;
 
             AddScene(levelOne);
-            levelOne.AddActor(sun);
-            levelOne.AddActor(planet1);
-            levelOne.AddActor(planet2);
             sun.AddChild(planet1);
             planet1.AddChild(planet2);
+            levelOne.AddActor(sun);
 
             _scenes[_currentSceneIndex].Start();
         }

@@ -35,17 +35,26 @@ namespace MathForGames
             set { SetTranslation(value.X, value.Y); }
         }
 
+        /// <summary>
+        /// The position of this actor in the world.
+        /// </summary>
         public Vector2 WorldPosition
         {
+            // Return the global transform's T column.
             get { return new Vector2(_globalTransform.M02, _globalTransform.M12); }
             set {
+                // If the actor has a parent...
                 if (Parent != null)
                 {
-                    SetTranslation((value.X - Parent.GlobalTransform.M02) / Parent.ScaleX,
-                                   (value.Y - Parent.GlobalTransform.M12) / Parent.ScaleY);
+                    // ...convert the world coordinates into local coordinates and translate the actor.
+                    float xOffset = (value.X - Parent.WorldPosition.X) / new Vector2(_globalTransform.M00, _globalTransform.M10).Magnitude;
+                    float yOffset = (value.Y - Parent.WorldPosition.Y) / new Vector2(_globalTransform.M10, _globalTransform.M11).Magnitude;
+                    SetTranslation(xOffset, yOffset);
                 }
+                // If this actor does not have a parent...
                 else
-                    SetTranslation(value.X, value.Y);
+                    // ...set local position to be the given value.
+                    LocalPosition = value;
             }
         }
 
@@ -74,17 +83,13 @@ namespace MathForGames
 
         public Vector2 Size
         {
-            get { return new Vector2(_scale.M00, _scale.M11); }
+            get 
+            {
+                float xScale = new Vector2(_scale.M00, _scale.M10).Magnitude;
+                float yScale = new Vector2(_scale.M01, _scale.M11).Magnitude;
+                return new Vector2(xScale, yScale); 
+            }
             set { SetScale(value.X, value.Y); }
-        }
-
-        public float ScaleX
-        {
-            get { return new Vector2 (_scale.M00, _scale.M01).Magnitude; }
-        }
-        public float ScaleY
-        {
-            get { return new Vector2(_scale.M10, _scale.M11).Magnitude; }
         }
 
         public string Name
@@ -139,7 +144,6 @@ namespace MathForGames
         public virtual void Update(float deltaTime, Scene currentScene)
         {
             Rotate(0.008f);
-            _localTransform = _translation * _rotation * _scale;
             Console.WriteLine(Name + LocalPosition.X + " , " + LocalPosition.Y);
 
             UpdateTransforms();
@@ -163,6 +167,8 @@ namespace MathForGames
 
         public void UpdateTransforms()
         {
+            _localTransform = _translation * _rotation * _scale;
+
             if (_parent != null)
                 GlobalTransform = _parent.GlobalTransform * LocalTransform;
             else
