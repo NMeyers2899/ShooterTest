@@ -43,6 +43,35 @@ namespace MathForGames
             int zDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
 
+            if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT)))
+            {
+                Bullet bullet = new Bullet(LocalPosition.X, LocalPosition.Y, LocalPosition.Z,
+                    20, -1, 0, "Bullet");
+                bullet.SetScale(0.3f, 0.2f, 0.3f);
+                currentScene.AddActor(bullet);
+            }
+            if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_RIGHT)))
+            {
+                Bullet bullet = new Bullet(LocalPosition.X, LocalPosition.Y, LocalPosition.Z,
+                    20, 1, 0, "Bullet");
+                bullet.SetScale(0.3f, 0.2f, 0.3f);
+                currentScene.AddActor(bullet);
+            }
+            if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_UP)))
+            {
+                Bullet bullet = new Bullet(LocalPosition.X, LocalPosition.Y, LocalPosition.Z,
+                    20, 0, -1, "Bullet");
+                bullet.SetScale(0.3f, 0.2f, 0.3f);
+                currentScene.AddActor(bullet);
+            }
+            if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_DOWN)))
+            {
+                Bullet bullet = new Bullet(LocalPosition.X, LocalPosition.Y, LocalPosition.Z,
+                    20, 0, 1, "Bullet");
+                bullet.SetScale(0.3f, 0.2f, 0.3f);
+                currentScene.AddActor(bullet);
+            }
+
             // Create a vector that stores the move input.
             Vector3 moveDirection = new Vector3(xDirection, 0, zDirection);
 

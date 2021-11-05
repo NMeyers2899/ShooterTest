@@ -13,6 +13,11 @@ namespace MathForGames
         private Actor[] _actors;
         private Actor[] _UIElements;
 
+        public Actor[] Actors
+        {
+            get { return _actors; }
+        }
+
         public Scene()
         {
             _actors = new Actor[0];

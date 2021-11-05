@@ -58,7 +58,7 @@ namespace MathForGames
             // Camera up vector(rotation towards target).
             _camera.up = new System.Numerics.Vector3(0, 1, 0);
             // Camera's field of view Y.
-            _camera.fovy = 45;
+            _camera.fovy = 70;
             // Camera mode type.
             _camera.projection = CameraProjection.CAMERA_PERSPECTIVE; 
         }
@@ -89,6 +89,16 @@ namespace MathForGames
         /// </summary>
         private void Update(float deltaTime)
         {
+            Actor playerCharacter = _scenes[0].Actors[0];
+
+            if (playerCharacter is Player)
+            {
+                _camera.position = new System.Numerics.Vector3(playerCharacter.LocalPosition.X,
+                playerCharacter.LocalPosition.Y + 15, playerCharacter.LocalPosition.Z + 15);
+                _camera.target = new System.Numerics.Vector3(playerCharacter.LocalPosition.X,
+                    playerCharacter.LocalPosition.Y, playerCharacter.LocalPosition.Z);
+            }
+
             _scenes[_currentSceneIndex].Update(deltaTime, _scenes[_currentSceneIndex]);
             _scenes[_currentSceneIndex].UpdateUI(deltaTime, _scenes[_currentSceneIndex]);
 
