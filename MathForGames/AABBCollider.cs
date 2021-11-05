@@ -72,7 +72,7 @@ namespace MathForGames
             Raylib.DrawRectangleLines((int)Left, (int)Top, (int)Width, (int)Height, Color.YELLOW);
         }
 
-        public override bool CheckCircleCollision(CircleCollider other)
+        public override bool CheckSphereCollision(SphereCollider other)
         {
             return other.CheckCollisionAABB(this);
         }

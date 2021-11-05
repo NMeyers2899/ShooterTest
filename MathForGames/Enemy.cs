@@ -11,7 +11,6 @@ namespace MathForGames
         private float _speed;
         private Vector3 _velocity;
         private Actor _target;
-        private Vector3 _forward = new Vector3(0, 0, 1);
         private float _maxViewAngle;
         private float _maxSightDistance;
         private int _health = 5;
@@ -28,11 +27,6 @@ namespace MathForGames
             set { _velocity = value; }
         }
 
-        public Vector3 Forward
-        {
-            get { return _forward; }
-            set { _forward = value; }
-        }
         public float Health
         {
             get { return _health; }
@@ -45,6 +39,7 @@ namespace MathForGames
             _speed = speed;
             _maxViewAngle = maxViewAngle;
             _maxSightDistance = maxSightDistance;
+            Collider = new SphereCollider(1, this);
         }
 
         public override void Update(float deltaTime, Scene currentScene)
@@ -56,30 +51,23 @@ namespace MathForGames
 
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
-            if (GetTargetInSight())
-            {
-                Translate(Velocity.X, Velocity.Y, Velocity.Z);
-            }        
+            Translate(Velocity.X, 0, Velocity.Z);    
         }
 
         public override void Draw()
         {
             base.Draw();
-            Collider.Draw();
-        }
-
-        public bool GetTargetInSight()
-        {
-            Vector3 directionOfTarget = (_target.LocalPosition - LocalPosition).Normalized;
-
-            float dotProduct = Vector3.DotProduct(directionOfTarget, Forward);
-
-            return Math.Acos(dotProduct) < _maxViewAngle;
+            if(Collider != null)
+                Collider.Draw();
         }
 
         public override void OnCollision(Actor actor, Scene currentScene)
         {
-
+            if(actor is Bullet)
+            {
+                currentScene.TryRemoveActor(this);
+                currentScene.TryRemoveActor(actor);
+            }
         }
     }
 }

@@ -76,9 +76,17 @@ namespace MathForGames
             InitializeCamera();
 
             Scene levelOne = new Scene();
-            Player baseCube = new Player(0, 2, 0, 15, "Cube");
+            Player playerCube = new Player(0, 2, 0, 15, "Cube");
+            Enemy enemyCube = new Enemy(0, 2, 20, 10, 15, 1, playerCube);
+            Enemy enemyCube1 = new Enemy(15, 2, -20, 10, 15, 1, playerCube);
+            Enemy enemyCube2 = new Enemy(100, 2, -20, 10, 15, 1, playerCube);
+            Enemy enemyCube3 = new Enemy(20, 2, -20, 10, 15, 1, playerCube);
 
-            levelOne.AddActor(baseCube);
+            levelOne.AddActor(playerCube);
+            levelOne.AddActor(enemyCube);
+            levelOne.AddActor(enemyCube1);
+            levelOne.AddActor(enemyCube2);
+            levelOne.AddActor(enemyCube3);
             AddScene(levelOne);
 
             _scenes[_currentSceneIndex].Start();
@@ -93,10 +101,10 @@ namespace MathForGames
 
             if (playerCharacter is Player)
             {
-                _camera.position = new System.Numerics.Vector3(playerCharacter.LocalPosition.X,
-                playerCharacter.LocalPosition.Y + 15, playerCharacter.LocalPosition.Z + 15);
-                _camera.target = new System.Numerics.Vector3(playerCharacter.LocalPosition.X,
-                    playerCharacter.LocalPosition.Y, playerCharacter.LocalPosition.Z);
+                _camera.position = new System.Numerics.Vector3(playerCharacter.WorldPosition.X,
+                playerCharacter.WorldPosition.Y + 15, playerCharacter.WorldPosition.Z + 15);
+                _camera.target = new System.Numerics.Vector3(playerCharacter.WorldPosition.X,
+                    playerCharacter.WorldPosition.Y, playerCharacter.WorldPosition.Z);
             }
 
             _scenes[_currentSceneIndex].Update(deltaTime, _scenes[_currentSceneIndex]);
@@ -115,7 +123,7 @@ namespace MathForGames
             Raylib.BeginDrawing();
             Raylib.BeginMode3D(_camera);
 
-            Raylib.ClearBackground(Color.GRAY);
+            Raylib.ClearBackground(Color.WHITE);
             Raylib.DrawGrid(50, 1);
 
             _scenes[_currentSceneIndex].Draw();

@@ -42,6 +42,10 @@ namespace MathForGames
                 + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_D));
             int zDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
+            int yDirection = Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_SPACE));
+
+            if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
+                Speed *= 2;
 
             if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT)))
             {
@@ -73,7 +77,7 @@ namespace MathForGames
             }
 
             // Create a vector that stores the move input.
-            Vector3 moveDirection = new Vector3(xDirection, 0, zDirection);
+            Vector3 moveDirection = new Vector3(xDirection, yDirection, zDirection);
 
             Velocity = moveDirection.Normalized * Speed * deltaTime;
 
@@ -94,7 +98,8 @@ namespace MathForGames
 
         public override void OnCollision(Actor actor, Scene currentScene)
         {
-
+            if (actor is Enemy)
+                currentScene.TryRemoveActor(this);
         }
     }
 }

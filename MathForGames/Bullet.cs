@@ -31,6 +31,7 @@ namespace MathForGames
             _speed = speed;
             _velocity.X = velocityX;
             _velocity.Z = velocityZ;
+            Collider = new SphereCollider(0.3f, this);
             _basePosition = LocalPosition;
         }
 

@@ -35,14 +35,14 @@ namespace MathForGames
         public bool CheckForCollision(Actor other)
         {
             if (other.Collider.ColliderType == ColliderType.CIRCLE)
-                return CheckCircleCollision((CircleCollider)other.Collider);
+                return CheckSphereCollision((SphereCollider)other.Collider);
             else if (other.Collider.ColliderType == ColliderType.AABB)
                 return CheckCollisionAABB((AABBCollider)other.Collider);
 
             return false;
         }
 
-        public virtual bool CheckCircleCollision(CircleCollider other) { return false; }
+        public virtual bool CheckSphereCollision(SphereCollider other) { return false; }
 
         public virtual bool CheckCollisionAABB(AABBCollider other) { return false; }
 

@@ -6,7 +6,7 @@ using Raylib_cs;
 
 namespace MathForGames
 {
-    class CircleCollider : Collider
+    class SphereCollider : Collider
     {
         private float _collisionRadius;
 
@@ -16,7 +16,7 @@ namespace MathForGames
             set { _collisionRadius = value; }
         }
 
-        public CircleCollider(float collisionRadius, Actor owner) : base(owner, ColliderType.CIRCLE)
+        public SphereCollider(float collisionRadius, Actor owner) : base(owner, ColliderType.CIRCLE)
         {
             _collisionRadius = collisionRadius;
         }
@@ -24,10 +24,12 @@ namespace MathForGames
         public override void Draw()
         {
             base.Draw();
-            Raylib.DrawCircleLines((int)Owner.LocalPosition.X, (int)Owner.LocalPosition.Y, CollisionRadius, Color.YELLOW);
+            System.Numerics.Vector3 position = new System.Numerics.Vector3(Owner.WorldPosition.X, 
+                Owner.WorldPosition.Y, Owner.WorldPosition.Z);
+            Raylib.DrawSphereWires(position, CollisionRadius, 15, 15, Color.YELLOW);
         }
 
-        public override bool CheckCircleCollision(CircleCollider other)
+        public override bool CheckSphereCollision(SphereCollider other)
         {
             // If the owners are the same...
             if (other.Owner == Owner)
@@ -56,6 +58,7 @@ namespace MathForGames
             // Clamp the direction vector to be within the bounds of the AABB.
             direction.X = Math.Clamp(direction.X, -other.Width / 2, other.Width / 2);
             direction.Y = Math.Clamp(direction.Y, -other.Height / 2, other.Height / 2);
+            direction.Z = Math.Clamp(direction.Z, -other.Height / 2, other.Height / 2);
 
             // Add the direction vector to the AABB center to get the closest point to the circle.
             Vector3 closestPoint = other.Owner.LocalPosition + direction;
