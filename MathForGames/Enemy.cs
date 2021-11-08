@@ -40,6 +40,7 @@ namespace MathForGames
             _maxViewAngle = maxViewAngle;
             _maxSightDistance = maxSightDistance;
             Collider = new SphereCollider(1, this);
+            SetColor(new Vector4(0, 255, 0, 255));
         }
 
         public override void Update(float deltaTime, Scene currentScene)
