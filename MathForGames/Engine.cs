@@ -78,16 +78,8 @@ namespace MathForGames
             Scene levelOne = new Scene();
             Player playerCube = new Player(0, 2, 0, 15, "Cube");
             playerCube.SetColor(new Vector4(255, 20, 20, 255));
-            Enemy enemyCube = new Enemy(0, 2, 20, 15, 15, 1, playerCube);
-            Enemy enemyCube1 = new Enemy(15, 2, -20, 15, 15, 1, playerCube);
-            Enemy enemyCube2 = new Enemy(100, 2, -20, 15, 15, 1, playerCube);
-            Enemy enemyCube3 = new Enemy(20, 2, -20, 15, 15, 1, playerCube);
 
             levelOne.AddActor(playerCube);
-            levelOne.AddActor(enemyCube);
-            levelOne.AddActor(enemyCube1);
-            levelOne.AddActor(enemyCube2);
-            levelOne.AddActor(enemyCube3);
             AddScene(levelOne);
 
             _scenes[_currentSceneIndex].Start();

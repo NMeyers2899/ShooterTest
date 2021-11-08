@@ -77,6 +77,11 @@ namespace MathLibrary
             return new Vector4 { X = lhs.X * rhs, Y = lhs.Y * rhs, Z = lhs.Z * rhs, W = lhs.W / rhs };
         }
 
+        public static Vector4 operator *(float lhs, Vector4 rhs)
+        {
+            return new Vector4 { X = lhs * rhs.X, Y = lhs * rhs.Y, Z = lhs * rhs.Z, W = lhs * rhs.W };
+        }
+
         public static Vector4 operator /(Vector4 lhs, float rhs)
         {
             return new Vector4 { X = lhs.X / rhs, Y = lhs.Y / rhs, Z = lhs.Z / rhs, W = lhs.W / rhs };

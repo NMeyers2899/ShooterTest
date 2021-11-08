@@ -84,6 +84,13 @@ namespace MathLibrary
                                0, 0, 1);
         }
 
+        public static Matrix3 CreateTranslation(Vector2 points)
+        {
+            return new Matrix3(1, 0, points.X,
+                               0, 1, points.Y,
+                               0, 0, 1);
+        }
+
         public static Matrix3 CreateScale(float x, float y)
         {
             return new Matrix3(x, 0, 0,
