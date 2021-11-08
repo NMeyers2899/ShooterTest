@@ -11,6 +11,7 @@ namespace MathForGames
         private float _speed;
         private Vector3 _velocity;
         private int _health = 2;
+        private float _originalSpeed;
 
         public float Speed
         {
@@ -24,7 +25,7 @@ namespace MathForGames
             set { _velocity = value; }
         }
 
-        public int Health
+        public int Healths
         {
             get { return _health; }
         }
@@ -33,19 +34,23 @@ namespace MathForGames
             Shape shape = Shape.CUBE) : base(x, y, z, name, shape)
         {
             _speed = speed;
+            _originalSpeed = _speed;
         }
 
         public override void Update(float deltaTime, Scene currentScene)
         {
+            int yDirection = 0;
+
             // Get the player input direction.
             int xDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_A)) 
                 + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_D));
             int zDirection = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
-            int yDirection = Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_SPACE));
 
             if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
-                Speed *= 2;
+                Speed = 80;
+            else
+                Speed = _originalSpeed;
 
             if (Convert.ToBoolean(Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT)))
             {
