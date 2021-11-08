@@ -64,7 +64,7 @@ namespace MathLibrary
 
         public static Vector4 operator -(Vector4 lhs, Vector4 rhs)
         {
-            return new Vector4 { X = lhs.X - rhs.X, Y = lhs.Y - rhs.Y, Z = lhs.Z - rhs.Z, W = lhs.W + rhs.W };
+            return new Vector4 { X = lhs.X - rhs.X, Y = lhs.Y - rhs.Y, Z = lhs.Z - rhs.Z, W = lhs.W - rhs.W };
         }
 
         public static Vector4 operator -(Vector4 vector)
