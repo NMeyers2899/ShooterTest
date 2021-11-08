@@ -43,7 +43,7 @@ namespace MathForGames
         public override void Update(float deltaTime, Scene currentScene)
         {
             if (_timer >= 50)
-                currentScene.TryRemoveActor(this);
+                currentScene.RemoveActor(this);
 
             base.Update(deltaTime, currentScene);
 

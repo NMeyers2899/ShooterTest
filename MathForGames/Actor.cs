@@ -27,6 +27,7 @@ namespace MathForGames
         private Actor[] _children = new Actor[0];
         private Actor _parent;
         private Shape _shape;
+        private Color _color;
 
         /// <summary>
         /// True if the start function has been called for this actor.
@@ -118,6 +119,11 @@ namespace MathForGames
             set { _collider = value; }
         }
 
+        public Color ShapeColor
+        {
+            get { return _color; }
+        }
+
         public Actor(Vector3 position, string name = "Actor", Shape shape = Shape.CUBE, Actor parent = null)
         {
             SetTranslation(position.X, position.Y, position.Z);
@@ -150,15 +156,22 @@ namespace MathForGames
             System.Numerics.Vector3 position = new System.Numerics.Vector3(WorldPosition.X, WorldPosition.Y,
                 WorldPosition.Z);
 
+            System.Numerics.Vector3 startPos = new System.Numerics.Vector3(WorldPosition.X,
+                WorldPosition.Y, WorldPosition.Z);
+            System.Numerics.Vector3 endPos = new System.Numerics.Vector3(WorldPosition.X + Forward.X * 10,
+                WorldPosition.Y + Forward.Y * 10, WorldPosition.Z + Forward.Z * 10);
+
             switch (_shape)
             {
                 case Shape.CUBE:
-                    Raylib.DrawCube(position, Size.X, Size.Y, Size.Z, Color.BLACK);
+                    Raylib.DrawCube(position, Size.X, Size.Y, Size.Z, ShapeColor);
                     break;
                 case Shape.SPHERE:
-                    Raylib.DrawSphere(position, Size.X, Color.BLACK);
+                    Raylib.DrawSphere(position, Size.X, ShapeColor);
                     break;
             }
+
+            Raylib.DrawLine3D(startPos, endPos, Color.RED);
         }
 
         public virtual void End()
@@ -168,7 +181,27 @@ namespace MathForGames
 
         public virtual void OnCollision(Actor actor, Scene currentScene)
         {
+            
+        }
 
+        /// <summary>
+        /// Sets the color of the actor.
+        /// </summary>
+        /// <param name="color"> The color the actor is being set to. </param>
+        public void SetColor(Color color)
+        {
+            _color = color;
+        }
+
+        /// <summary>
+        /// Sets the color of the actor in a more modifiable way.
+        /// </summary>
+        /// <param name="colorValue"> The x is red, the y is green, the z is blue, and the w
+        ///  is transparency. </param>
+        public void SetColor(Vector4 colorValue)
+        {
+            _color = new Color((int)colorValue.X, (int)colorValue.Y, (int)colorValue.Z,
+                (int)colorValue.W);
         }
 
         public void UpdateTransforms()
@@ -241,6 +274,7 @@ namespace MathForGames
         /// </summary>
         /// <param name="translationX"> The new x position. </param>
         /// <param name="translationY"> The new y position. </param>
+        /// <param name="translationZ"> The new z position. </param>
         public void SetTranslation(float translationX, float translationY, float translationZ)
         {
             _translation = Matrix4.CreateTranslation(translationX, translationY, translationZ);
@@ -251,6 +285,7 @@ namespace MathForGames
         /// </summary>
         /// <param name="translationX"> The amount to move on the x. </param>
         /// <param name="translationY"> The amount to move on the y. </param>
+        /// <param name="translationZ"> The amount to move on the z. </param>
         public void Translate(float translationX, float translationY, float translationZ)
         {
             _translation *= Matrix4.CreateTranslation(translationX, translationY, translationZ);
@@ -259,7 +294,9 @@ namespace MathForGames
         /// <summary>
         /// Set the rotation of the actor.
         /// </summary>
-        /// <param name="radians"> The angle of the new rotation in radians. </param>
+        /// <param name="radiansX"> The angle in radians to turn on the x-axis. </param>
+        /// <param name="radiansY"> The angle in radians to turn on the y-axis. </param>
+        /// <param name="radiansZ"> The angle in radians to turn on the z-axis. </param>
         public void SetRotation(float radiansX, float radiansY, float radiansZ)
         {
             Matrix4 rotationX = Matrix4.CreateRotationX(radiansX);
@@ -271,7 +308,9 @@ namespace MathForGames
         /// <summary>
         /// Adds a roation to the current transform's rotation.
         /// </summary>
-        /// <param name="radians"> The angle in radians to turn. </param>
+        /// <param name="radiansX"> The angle in radians to turn on the x-axis. </param>
+        /// <param name="radiansY"> The angle in radians to turn on the y-axis. </param>
+        /// <param name="radiansZ"> The angle in radians to turn on the z-axis. </param>
         public void Rotate(float radiansX, float radiansY, float radiansZ)
         {
             Matrix4 rotationX = Matrix4.CreateRotationX(radiansX);
@@ -288,8 +327,9 @@ namespace MathForGames
         /// <summary>
         /// Scales the actor by the given amount.
         /// </summary>
-        /// <param name="x"> The value to scale on the x axis. </param>
-        /// <param name="y"> The value to scale on the y axis. </param>
+        /// <param name="x"> The value to scale on the x-axis. </param>
+        /// <param name="y"> The value to scale on the y-axis. </param>
+        /// <param name="z"> The value to scale on the z-axis. </param>
         public void Scale(float x, float y, float z)
         {
             _scale *= Matrix4.CreateScale(x, y, z);
@@ -304,13 +344,54 @@ namespace MathForGames
             // Find the direction that the actor should look in.
             Vector3 direction = (position - WorldPosition).Normalized;
 
+            // If the direction has a length of 0...
             if (direction.Magnitude == 0)
+                // ...set it to be the default foward.
                 direction = new Vector3(0, 0, 1);
 
+            // Create a vector that points directly upwards.
             Vector3 alignAxis = new Vector3(0, 1, 0);
 
+            // Creates two new vectors that will be the new x and y-axis.
             Vector3 newYAxis = new Vector3(0, 1, 0);
             Vector3 newXAxis = new Vector3(1, 0, 0);
+
+            // If the direction vector is parallel to the alignAxis vector...
+            if(Math.Abs(direction.Y) > 0 && direction.X == 0 && direction.Z == 0)
+            {
+                // ...set the alignAxis vector to point to the right.
+                alignAxis = new Vector3(1, 0, 0);
+
+                // Get the cross product of the direction and the right to find the new y-axis.
+                newYAxis = Vector3.CrossProduct(direction, alignAxis);
+                // Normalize the new y-axis to prevent the matrix from being scaled.
+                newYAxis.Normalize();
+
+                // Get the cross product of the new x-axis and find the direction to find the new 
+                // x-axis.
+                newXAxis = Vector3.CrossProduct(newYAxis, direction);
+                // Normalize the new x-axis to prevent the matrix from being scaled.
+                newXAxis.Normalize();
+            }
+            // If the direction vector is not parallel...
+            else
+            {
+                // ...get the cross product of the alignAxis and the direction vector.
+                newXAxis = Vector3.CrossProduct(alignAxis, direction);
+                // Normalize the x-axis to prevent the matrix from being scaled.
+                newXAxis.Normalize();
+
+                // Get the cross product of the alignAxis and the direction Vector.
+                newYAxis = Vector3.CrossProduct(direction, newXAxis);
+                // Normalize the new y-axis to prevent the matrix from being scaled.
+                newYAxis.Normalize();
+            }
+
+            // Create a new matrix with the new axis.
+            _rotation = new Matrix4(newXAxis.X, newYAxis.X, direction.X, 0,
+                                    newXAxis.Y, newYAxis.Y, direction.Y, 0,
+                                    newXAxis.Z, newYAxis.Z, direction.Z, 0,
+                                    0, 0, 0, 1);
         }
     }
 }

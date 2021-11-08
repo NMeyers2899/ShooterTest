@@ -46,6 +46,12 @@ namespace MathLibrary
             return (lhs.X * rhs.X) + (lhs.Y * rhs.Y) + (lhs.Z * rhs.Z);
         }
 
+        public static Vector4 CrossProduct(Vector4 lhs, Vector4 rhs)
+        {
+            return new Vector4((lhs.Y * rhs.Z) - (lhs.Z * rhs.Y), (lhs.Z * rhs.X) - (lhs.X * rhs.Z),
+                (lhs.X * rhs.Y) - (lhs.Y * rhs.X), 0);
+        }
+
         public static float Distance(Vector4 lhs, Vector4 rhs)
         {
             return (rhs - lhs).Magnitude;

@@ -46,6 +46,8 @@ namespace MathForGames
         {
             base.Update(deltaTime, currentScene);
 
+            LookAt(_target.WorldPosition);
+
             // Create a vector that stores the move input.
             Vector3 moveDirection = _target.LocalPosition - LocalPosition;
 
@@ -57,7 +59,7 @@ namespace MathForGames
         public override void Draw()
         {
             base.Draw();
-            if(Collider != null)
+            if (Collider != null)
                 Collider.Draw();
         }
 
@@ -65,8 +67,8 @@ namespace MathForGames
         {
             if(actor is Bullet)
             {
-                currentScene.TryRemoveActor(this);
-                currentScene.TryRemoveActor(actor);
+                currentScene.RemoveActor(this);
+                currentScene.RemoveActor(actor);
             }
         }
     }

@@ -167,7 +167,7 @@ namespace MathForGames
         /// </summary>
         /// <param name="actor"> The actor being removed. </param>
         /// <returns> If the actor could be removed. </returns>
-        public bool TryRemoveActor(Actor actor)
+        public bool RemoveActor(Actor actor)
         {
             // Creates a variable that helps keep track of when an actor is removed from the _actors array.
             bool actorRemoved = false;
